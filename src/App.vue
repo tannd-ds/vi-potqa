@@ -2,7 +2,7 @@
 
   import { ref, reactive, computed, watch } from 'vue'
 
-  const ps = reactive([
+  const ps = ref([
     {
       id: 0,
       name: 'Hello World',
@@ -35,14 +35,12 @@
   function add() {
     if (hasValidInput()) {
         const p_temp = {
-          id: ps.length,
+          id: ps.value.length,
           name: p_name.value,
           content: para_to_sentences(p_content.value)
         }
-        if (!ps.includes(p_temp)) {
-          ps.push(p_temp)
-          p_name.value = p_content.value = ''
-        }
+        ps.value.push(p_temp)
+        p_name.value = p_content.value = ''
     }
   }
 
@@ -59,7 +57,13 @@
   }
 
   function remove_para(p_id) {
-    ps = ps.slice(0, p_id).concat(ps.slice(p_id+1))
+    let index = ps.value.findIndex(p => p.id == p_id);
+    if (ps.value.length == 1) {
+      ps.value = []
+    }
+    else {
+      ps.value = ps.value.slice(0, index).concat(ps.value.slice(index+1))
+    }
   }
 
 </script>
