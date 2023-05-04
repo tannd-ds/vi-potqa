@@ -1,0 +1,166 @@
+:root {
+  --primary-accent-color: #F1F5FF;
+  --secondary-accent-color: #AFD3E2;
+
+  --black: #2B3467;
+  --black-1: #146C94;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+  color: var(--black);
+}
+
+#app {
+  background-color: var(--primary-accent-color);
+
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.left-panel {
+  margin: 2vw;
+  width: 40%;
+  height: 92vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  justify-content: center;
+}
+
+.p-name {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.p-name input {
+  padding: 2em 1em;
+  border-radius: 1vh;
+  border: none;
+}
+
+.p-name textarea {
+  padding: 1em 1em;
+  border-radius: 1vh;
+  border: none;
+  font-size: 100%;
+}
+
+.p-name input:focus, textarea:focus {
+  border-color: var(--secondary-accent-color);
+}
+
+.input-box {
+  height: 2.5em;
+}
+
+.btn {
+  width: 50%;
+  height: 3em;
+  background-color: var(--black);
+  color: var(--primary-accent-color);
+  font-weight: 700;
+  border-radius: 1vh;
+  border: 3px solid var(--black);
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: var(--primary-accent-color);
+  color: var(--black);
+  transition: all 0.3s ease;
+}
+
+
+/* ----- Right Panel Side ----- */
+
+.right-panel { /*this is the same as the left-panel*/
+  margin: 2vw;
+  width: 45%;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  justify-content: center;
+}
+
+.p-name-bar {
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
+}
+
+.p-list {
+  max-height: 92vh;
+}
+
+.p-name-bar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.p-name-bar-btn button {
+  width: 2rem;
+  border: none;
+  background-color: var(--primary-accent-color);
+  align-items: center;
+}
+
+.p-name-bar-btn button img {
+  width: 50%;
+  opacity: 20%;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.p-name-bar-btn button img:hover {
+  opacity: 100%;
+  transition: all 0.3s ease;
+}
+
+.p-confirmed {
+  margin-top: 2em;
+  margin-right: 1.5em;
+  padding-bottom: 2em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.s-confirmed {
+  background-color: #FFF;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+
+  text-align: justify;
+  transition: all 0.1s ease;
+}
+
+.s-confirmed label {
+  padding: 1.5em 2em;
+  border-radius: 0.5em;
+  box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  line-height: 1.75em;
+}
+
+.s-confirmed input:checked~label {
+  background-color: var(--black);
+  color: var(--primary-accent-color);
+  transition: all 0.1s ease;
+}
+
+/* ----- General ----- */
+.scrollable {
+   overflow-y: scroll;
+}
