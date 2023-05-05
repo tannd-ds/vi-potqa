@@ -15,11 +15,12 @@
 }
 
 #app {
-  background-color: var(--primary-accent-color);
-
+  /* background-color: var(--primary-accent-color); */
+  background: linear-gradient(135deg, rgba(246,255,222,1) 0%, rgba(227,242,193,1) 33%, rgba(201,219,178,1) 65%, rgba(170,200,167,1) 100%);
 }
 
 .wrapper {
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -35,6 +36,29 @@
   justify-content: center;
 }
 
+.web-title-container {
+  margin-bottom: 3em;
+  display: flex;
+  flex-direction: row;
+  gap: min(1em, 15px);
+  align-items: center;
+  justify-content: center;
+}
+
+.web-title-container .app-logo {
+  width: 5vw;
+}
+
+.web-title-container .text-title .app-name {
+  font-size: min(2vw, 30px)
+}
+
+.web-title-container .text-title .hashtag {
+  font-size: min(1.5vw, 20px);
+  font-weight: 300;
+  font-style: italic;
+}
+
 .p-name {
   display: flex;
   flex-direction: column;
@@ -43,6 +67,7 @@
 
 .p-name input, textarea {
   padding: 2em 1em;
+  background-color: rgba(255, 255, 255, 0.7);
   border-radius: 1vh;
   border: none;
 }
@@ -61,19 +86,20 @@
 }
 
 .btn {
-  width: 50%;
+  width: 20%;
   height: 3em;
-  background-color: var(--black);
-  color: var(--primary-accent-color);
+  background-color: #f4af5b;
+  color: #8b5f29;
   font-weight: 700;
-  border-radius: 1vh;
-  border: 3px solid var(--black);
+  border-radius: 0.5vh;
+  border: transparent;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .btn:hover {
-  background-color: var(--primary-accent-color);
-  color: var(--black);
+  background-color: #f7b769;
+  color: #8b5f29;
   transition: all 0.3s ease;
 }
 
@@ -109,7 +135,7 @@
 .p-name-bar-btn button {
   width: 2rem;
   border: none;
-  background-color: var(--primary-accent-color);
+  background-color: transparent;
   align-items: center;
 }
 
@@ -146,6 +172,7 @@
 .s-confirmed label {
   border-radius: 0.5em;
   padding: 1.2em 2em;
+  background-color: rgba(255, 255, 255, 0.5);
   box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   line-height: 1.75em;
@@ -159,5 +186,12 @@
 
 /* ----- General ----- */
 .scrollable {
-   overflow-y: scroll;
+   overflow-y: auto;
+}
+
+.disable-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
