@@ -66,7 +66,7 @@
       let p_id = ids[i].slice(0, ids[i].indexOf("-"))
       let s_id = ids[i].slice(ids[i].indexOf("-")+1)
       // Find the index of the Paragraph that has id = p_id
-      let p_index = ps.value.findIndex(p => p.id == p_id);
+      let p_index = ps.value.findIndex(p => p.id == p_id)
       result.push([ps.value[p_index].name, Number(s_id)])
     }
     return result
@@ -74,12 +74,7 @@
 
   function remove_para(p_id) {
     let index = ps.value.findIndex(p => p.id == p_id)
-    if (ps.value.length == 1) {
-      ps.value = []
-    }
-    else {
-      ps.value = ps.value.slice(0, index).concat(ps.value.slice(index+1))
-    }
+    ps.value = ps.value.slice(0, index).concat(ps.value.slice(index+1))
   }
 
   function export_data() {
@@ -89,7 +84,7 @@
     data['contexts'] = ps.value
     data['answer'] = answer_content.value
 
-    console.log(data)
+    console.log(JSON.stringify(data))
   }
 
 </script>
@@ -99,7 +94,7 @@
   <div class="wrapper">
     <div class="left-panel">
       <div class="web-title-container">
-        <img class="app-logo disable-select" src="./assets/t-and-t-logo-no-text.svg">
+        <img class="app-logo disable-select" src="./assets/avocaduck-logo-head-no-text.svg">
         <div class="text-title">
           <h1 class="app-name disable-select">Vi-PotQA Annotator</h1>
           <h3 class="hashtag disable-select">@tannd-ds</h3>
