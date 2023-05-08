@@ -24,7 +24,6 @@
   }
 
   function add_para() {
-    console.log(ps)
     if (hasValidInput()) {
       const p_temp = {
         name: p_name.value,
@@ -77,6 +76,10 @@
     confirmed_data.value.push([data])
     localStorage.setItem("data", JSON.stringify(confirmed_data.value))
   }
+
+  function sentence_to_word(sentence) {
+    return sentence.split(" ")
+  }
 </script>
 
 <template>
@@ -95,7 +98,7 @@
       </div>
       <div class="p-name">
         <label class="disable-select" for="content-input">Paragraph Content</label>
-        <textarea id="content-input" v-model="p_content" placeholder="Insert your paragraph here" rows="15" spellcheck="false" autocomplete="off" aria-autocomplete="none"></textarea>
+        <textarea id="content-input" v-model="p_content" placeholder="Insert your paragraph here" rows="10" spellcheck="false" autocomplete="off" aria-autocomplete="none"></textarea>
       </div>
       <button class="btn add-btn" @click="add_para">Add</button>
       <div class="p-name">
@@ -119,17 +122,32 @@
               <button class="remove-btn" @click="remove_para(p)" title="Remove Paragraph"><img src="./assets/xmark-solid.svg"></button>
             </div>
           </div>
-          <div class="s-confirmed" v-for="s in p.content">
-            <input 
-              type="checkbox" 
-              name="optional" 
-              :id="String(find_index_a_in_b(p, ps)) + '-' + String(find_index_a_in_b(s, p.content))" 
-              :value="String(find_index_a_in_b(p, ps)) + '-' + String(find_index_a_in_b(s, p.content))" 
-              v-model="checked_ids"
-              required hidden
-            >
-            <label :for="String(find_index_a_in_b(p, ps)) + '-' + String(find_index_a_in_b(s, p.content))" class="">{{ s }}</label>
-          </div>
+          <p class="s-list">
+            <span class="s-confirmed" v-for="s in p.content">
+              <span class="word s-index">
+                <input 
+                type="checkbox" 
+                name="optional" 
+                :id="String(find_index_a_in_b(p, ps)) + '-' + String(find_index_a_in_b(s, p.content))" 
+                :value="String(find_index_a_in_b(p, ps)) + '-' + String(find_index_a_in_b(s, p.content))" 
+                v-model="checked_ids"
+                required hidden
+                >
+                <label :for="String(find_index_a_in_b(p, ps)) + '-' + String(find_index_a_in_b(s, p.content))" class="disable-select">[{{ find_index_a_in_b(s, p.content) }}]</label>
+              </span>
+              <span class="word" v-for="w in sentence_to_word(s)">
+                <input 
+                type="checkbox" 
+                name="optional" 
+                :id="String(find_index_a_in_b(p, ps)) + '-' + String(find_index_a_in_b(s, p.content))" 
+                :value="String(find_index_a_in_b(p, ps)) + '-' + String(find_index_a_in_b(s, p.content))" 
+                v-model="checked_ids"
+                required hidden
+                >
+                <label :for="String(find_index_a_in_b(p, ps)) + '-' + String(find_index_a_in_b(s, p.content))" class="disable-select">{{ w }}</label>
+              </span>
+            </span>
+          </p>
         </div>
       </div>
     </div>
