@@ -35,10 +35,31 @@
     }
   }
 
+  function update_checked_id(removed_p_id) {
+    let ids = checked_ids.value
+    let result = []
+    for (let i = 0; i < ids.length; i++) {
+      // Split Paragraph id and Sentence id from id String
+      let p_id = ids[i].slice(0, ids[i].indexOf("-"))
+      let s_id = ids[i].slice(ids[i].indexOf("-")+1)
+      /*
+      - If p_id is removed_p_id: move on
+      - If p_id is less than remove_p_id: add it to new list, doesn't need extra update
+      - If p_id is greater than remove_p_id: update its index (by minus 1) then add it to new list
+      */
+      if (p_id == removed_p_id) continue
+      if (p_id < removed_p_id)
+        result.push(ids[i])
+      else 
+        result.push(String(p_id-1) + '-' + String(s_id))
+    }
+    return result
+  }
   
   function remove_para(p) {
     let index = find_index_a_in_b(p, ps.value)
     ps.value = ps.value.slice(0, index).concat(ps.value.slice(index+1))
+    checked_ids.value = update_checked_id(index)
     localStorage.setItem("current_ps", JSON.stringify(ps.value))
   }
 
@@ -46,7 +67,7 @@
     return p_name.value.trim() && p_content.value.trim()
   }
 
-  function ids_to_names(ids) {
+  function ids_to_names() {
     ids = checked_ids.value
     let result = []
     for (let i = 0; i < ids.length; i++) {
@@ -65,7 +86,7 @@
 
   function export_data() {
     let data = {}
-    data['facts'] = ids_to_names(checked_ids)
+    data['facts'] = ids_to_names()
     data['question'] = question_content.value
     let ps_simplified = []
     for (let i = 0; i < ps.value.length; i++)
