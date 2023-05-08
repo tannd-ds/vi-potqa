@@ -2,37 +2,45 @@
 
   import { ref, reactive, computed, watch } from 'vue'
 
-  const ps = ref([
-    {
-      name: 'Hello World',
-      content: [
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        ' Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-        ' Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-        ' Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-      ]
-    },
-  ])
+  const ps = ref([])
   const p_name = ref("")
   const p_content = ref("")
   const question_content = ref("")
   const answer_content = ref("")
   const checked_ids = ref([])
-  const confirmed_data = Array(localStorage.getItem("data"))
+  const confirmed_data = ref([])
+
+  // Load data from LocalStorage
+  load_state()
+  function load_state() {
+    let confirmed_local = localStorage.getItem("data")
+    confirmed_data.value = (confirmed_local == null) ? [] : JSON.parse(confirmed_local) 
+    let ps_local = localStorage.getItem("current_ps")
+    ps.value = (ps_local == null) ? [] : JSON.parse(ps_local)
+  }
 
   function para_to_sentences(para) {
     return  para.split(/(?<=[.!?])\s+/)
   }
 
-  function add() {
+  function add_para() {
+    console.log(ps)
     if (hasValidInput()) {
-        const p_temp = {
-          name: p_name.value,
-          content: para_to_sentences(p_content.value)
-        }
-        ps.value.push(p_temp)
-        p_name.value = p_content.value = ''
+      const p_temp = {
+        name: p_name.value,
+        content: para_to_sentences(p_content.value)
+      }
+      ps.value.push(p_temp)
+      localStorage.setItem("current_ps", JSON.stringify(ps.value))
+      p_name.value = p_content.value = ''
     }
+  }
+
+  
+  function remove_para(p) {
+    let index = find_index_a_in_b(p, ps.value)
+    ps.value = ps.value.slice(0, index).concat(ps.value.slice(index+1))
+    localStorage.setItem("current_ps", JSON.stringify(ps.value))
   }
 
   function hasValidInput() {
@@ -56,26 +64,19 @@
     return b.findIndex(b_element => b_element == a)
   }
 
-  function remove_para(p) {
-    let index = find_index_a_in_b(p, ps.value)
-    ps.value = ps.value.slice(0, index).concat(ps.value.slice(index+1))
-  }
-
   function export_data() {
     let data = {}
     data['facts'] = ids_to_names(checked_ids)
     data['question'] = question_content.value
     let ps_simplified = []
     for (let i = 0; i < ps.value.length; i++)
-      ps_simplified.push(ps.value[i].name, ps.value[i].content)
+      ps_simplified.push([ps.value[i].name, ps.value[i].content])
     data['contexts'] = ps_simplified
     data['answer'] = answer_content.value
 
-    confirmed_data.push(data)
-    localStorage.setItem("data", JSON.stringify(confirmed_data))
+    confirmed_data.value.push([data])
+    localStorage.setItem("data", JSON.stringify(confirmed_data.value))
   }
-
-
 </script>
 
 <template>
@@ -96,7 +97,7 @@
         <label class="disable-select" for="content-input">Paragraph Content</label>
         <textarea id="content-input" v-model="p_content" placeholder="Insert your paragraph here" rows="15" spellcheck="false" autocomplete="off" aria-autocomplete="none"></textarea>
       </div>
-      <button class="btn add-btn" @click="add">Add</button>
+      <button class="btn add-btn" @click="add_para">Add</button>
       <div class="p-name">
         <label class="disable-select" for="question-input">Question</label>
         <input class="input-box" id="question-input" v-model="question_content" placeholder="Question" spellcheck="false" autocomplete="off" aria-autocomplete="none"> 
