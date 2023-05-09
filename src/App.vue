@@ -1,6 +1,12 @@
 <script setup>
 
   import { ref, reactive, computed, watch } from 'vue'
+  import Toast from './components/Toast.vue'
+
+  const is_show_toast = ref(false)
+  const toast_title = ref("")
+  const toast_content = ref("")
+  const toast_type = ref("success")
 
   const ps = ref([])
   const p_name = ref("")
@@ -32,6 +38,9 @@
       ps.value.push(p_temp)
       localStorage.setItem("current_ps", JSON.stringify(ps.value))
       p_name.value = p_content.value = ''
+    }
+    else {
+      show_toast('error', 'Fail', 'Paragraph\'s name or content is empty')
     }
   }
 
@@ -96,14 +105,29 @@
 
     confirmed_data.value.push([data])
     localStorage.setItem("data", JSON.stringify(confirmed_data.value))
+    show_toast('success', 'Success', 'Save data successfully')
   }
 
   function sentence_to_word(sentence) {
     return sentence.split(" ")
   }
+
+  function show_toast(type='sucess', title, content) {
+    toast_type.value = type
+    toast_title.value = title
+    toast_content.value = content
+    is_show_toast.value = true
+    setTimeout(function(){is_show_toast.value = false}, 3000)
+  }
 </script>
 
 <template>
+  <Teleport to="body">
+    <toast :class="{ active: is_show_toast }" :show="is_show_toast" :type="toast_type" @close="is_show_toast=false" @click="is_show_toast=false">
+      <template #title>{{ toast_title }}</template>
+      <template #content>{{ toast_content }}</template>
+    </toast>
+  </Teleport>
   <div class="wrapper">
     <div class="left-panel">
       <div class="web-title-container">
@@ -172,6 +196,5 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
