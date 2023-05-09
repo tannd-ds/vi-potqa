@@ -95,12 +95,32 @@
 
   function export_data() {
     let data = {}
-    data['facts'] = ids_to_names()
-    data['question'] = question_content.value
+
+    if (ps.value.length == 0) {
+      show_toast('error', 'Empty Contexts', 'Please add more Context Paragraph')
+      return 
+    }
     let ps_simplified = []
     for (let i = 0; i < ps.value.length; i++)
       ps_simplified.push([ps.value[i].name, ps.value[i].content])
     data['contexts'] = ps_simplified
+
+    if (ids_to_names().length == 0) {
+      show_toast('error', 'Empty Facts', 'Please choose more facts')
+      return 
+    }
+    data['facts'] = ids_to_names()
+    
+    if (question_content.value == "") {
+      show_toast('error', 'Empty Question', 'Please add a Question')
+      return 
+    }
+    data['question'] = question_content.value
+    
+    if (answer_content.value == "") {
+      show_toast('error', 'Empty Answer', 'Please add an Answer')
+      return 
+    }
     data['answer'] = answer_content.value
 
     confirmed_data.value.push([data])
