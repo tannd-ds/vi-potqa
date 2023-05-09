@@ -68,7 +68,7 @@
   }
 
   function ids_to_names() {
-    ids = checked_ids.value
+    let ids = checked_ids.value
     let result = []
     for (let i = 0; i < ids.length; i++) {
       // Split Paragraph id and Sentence id from id String
