@@ -16,6 +16,9 @@
   const checked_ids = ref([])
   const confirmed_data = ref([])
 
+  // Server-side variables
+  let flask_host = 'http://localhost:8989/real'
+
   // Load data from LocalStorage
   load_state()
   function load_state() {
@@ -139,6 +142,18 @@
     is_show_toast.value = true
     setTimeout(function(){is_show_toast.value = false}, 3000)
   }
+
+  const fetched_content = ref("")
+  function fetch_localhost_data() {
+    const url = flask_host
+    fetch(url)
+    .then(response => response.json())  
+    .then(json => {
+        console.log(json);
+        fetched_content.value = JSON.stringify(json)
+    })
+  }
+
 </script>
 
 <template>
@@ -151,7 +166,7 @@
   <div class="wrapper">
     <div class="left-panel">
       <div class="web-title-container">
-        <img class="app-logo disable-select" src="./assets/avocaduck-logo-head-no-text.svg">
+        <img class="app-logo disable-select" src="./assets/flat-head-color.png">
         <div class="text-title">
           <h1 class="app-name disable-select">Vi-PotQA Annotator</h1>
           <h3 class="hashtag disable-select">@tannd-ds</h3>
@@ -175,6 +190,8 @@
         <input class="input-box" id="answer-input" v-model="answer_content" placeholder="Answer" spellcheck="false" autocomplete="off" aria-autocomplete="none"> 
       </div>
       <button class="btn confirm-btn" @click="export_data">Confirm</button>
+      <button class="btn confirm-btn" @click="fetch_localhost_data">Fetch</button>
+      <div> {{ fetched_content }}</div>
     </div>
 
     <div class="right-panel scrollable">
