@@ -4,14 +4,19 @@
 
   --black: #2B3467;
   --black-1: #146C94;
+
+  overflow: hidden;
 }
 
 * {
+  
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
+  font-size: 0.84vw;
+
 }
 
 #app {
