@@ -184,13 +184,15 @@
       <template #content>{{ toast_content }}</template>
     </toast>
   </Teleport>
+  <img class="bg-gradient grad-1" src="./assets/Ellipse green-blue.png" />
+  <img class="bg-gradient grad-2" src="./assets/Ellipse pink.png" />
   <div class="wrapper">
     <div class="left-panel">
       <div class="web-title-container">
-        <img class="app-logo disable-select" src="./assets/flat-head-color.png">
+        <!-- <img class="app-logo disable-select" src="./assets/flat-head-color.png"> -->
         <div class="text-title">
-          <h1 class="app-name disable-select">Vi-PotQA Annotator</h1>
-          <h3 class="hashtag disable-select">@tannd-ds & @ndp</h3>
+          <h1 class="app-name disable-select">Vi-PotQA</h1>
+          <!-- <h3 class="hashtag disable-select">@tannd-ds & @ndp</h3> -->
         </div>
       </div>
       <div class="p-name">
@@ -211,8 +213,8 @@
         <input class="input-box" id="answer-input" v-model="answer_content" placeholder="Answer" spellcheck="false" autocomplete="off" aria-autocomplete="none"> 
       </div>
       <button class="btn confirm-btn" @click="export_data">Confirm</button>
-      <button class="btn confirm-btn" @click="fetch_localhost_data">Fetch</button>
-      <button class="btn confirm-btn" @click="post_localhost_data">POST</button>
+      <!-- <button class="btn confirm-btn" @click="fetch_localhost_data">Fetch</button>
+      <button class="btn confirm-btn" @click="post_localhost_data">POST</button> -->
       <div> {{ fetched_content }}</div>
     </div>
 

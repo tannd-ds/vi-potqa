@@ -73,9 +73,9 @@ const toast_icon_src = ref({
   top: 2em;
   right: 2em;
   background-color: v-bind(toast_color[type]);
-  border-radius: 1vh;
-  box-shadow: 0px 0.3em rgba(0, 0, 0, 1);
-  border: 0.3em solid rgba(0, 0, 0, 1);
+  border-radius: 0.5em;
+  /* box-shadow: 0px 0.3em rgba(0, 0, 0, 1);
+  border: 0.3em solid rgba(0, 0, 0, 1); */
   overflow: hidden;
   z-index: 999;
   cursor: pointer;
