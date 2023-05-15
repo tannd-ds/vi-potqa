@@ -16,6 +16,9 @@
   const checked_ids = ref([])
   const confirmed_data = ref([])
 
+  // Server-side variables
+  let flask_host = 'http://localhost:8989/json'
+
   // Load data from LocalStorage
   load_state()
   function load_state() {
@@ -50,7 +53,7 @@
     for (let i = 0; i < ids.length; i++) {
       // Split Paragraph id and Sentence id from id String
       let p_id = ids[i].slice(0, ids[i].indexOf("-"))
-      let s_id = ids[i].slice(ids[i].indexOf("-")+1)
+      let s_id = ids[i].slice(ids[i].indexOf("-") + 1 )
       /*
       - If p_id is removed_p_id: move on
       - If p_id is less than remove_p_id: add it to new list, doesn't need extra update
@@ -70,6 +73,10 @@
     ps.value = ps.value.slice(0, index).concat(ps.value.slice(index+1))
     checked_ids.value = update_checked_id(index)
     localStorage.setItem("current_ps", JSON.stringify(ps.value))
+  }
+
+  function edit_para(p) {
+    console.log(p.content, p.name)
   }
 
   function hasValidInput() {
@@ -139,22 +146,53 @@
     is_show_toast.value = true
     setTimeout(function(){is_show_toast.value = false}, 3000)
   }
+
+  const fetched_content = ref("")
+  function fetch_localhost_data() {
+    const url = flask_host
+    fetch(url)
+    .then(response => response.json())  
+    .then(json => {
+        console.log(JSON.parse(json));
+        fetched_content.value = JSON.parse(json)
+    })
+  }
+  function post_localhost_data() {
+    let data = new FormData()
+    // data.append("name": "Flask Room")
+    data.append("description", "Talk about Flask here.")
+    console.log(JSON.stringify(confirmed_data.value))
+    console.log(data)
+    fetch(flask_host, {
+      "method": "POST",
+      "body": JSON.stringify(confirmed_data.value)
+    })
+  }
+
 </script>
 
 <template>
   <Teleport to="body">
-    <toast :class="{ active: is_show_toast }" :show="is_show_toast" :type="toast_type" @close="is_show_toast=false" @click="is_show_toast=false">
+    <toast 
+      :class="{ active: is_show_toast }" 
+      :show="is_show_toast" 
+      :type="toast_type" 
+      @close="is_show_toast=false" 
+      @click="is_show_toast=false"
+    >
       <template #title>{{ toast_title }}</template>
       <template #content>{{ toast_content }}</template>
     </toast>
   </Teleport>
+  <img class="bg-gradient grad-1" src="./assets/Ellipse green-blue.png" />
+  <img class="bg-gradient grad-2" src="./assets/Ellipse pink.png" />
   <div class="wrapper">
     <div class="left-panel">
       <div class="web-title-container">
-        <img class="app-logo disable-select" src="./assets/avocaduck-logo-head-no-text.svg">
+        <!-- <img class="app-logo disable-select" src="./assets/flat-head-color.png"> -->
         <div class="text-title">
-          <h1 class="app-name disable-select">Vi-PotQA Annotator</h1>
-          <h3 class="hashtag disable-select">@tannd-ds</h3>
+          <h1 class="app-name disable-select">Vi-PotQA</h1>
+          <!-- <h3 class="hashtag disable-select">@tannd-ds & @ndp</h3> -->
         </div>
       </div>
       <div class="p-name">
@@ -175,6 +213,9 @@
         <input class="input-box" id="answer-input" v-model="answer_content" placeholder="Answer" spellcheck="false" autocomplete="off" aria-autocomplete="none"> 
       </div>
       <button class="btn confirm-btn" @click="export_data">Confirm</button>
+      <!-- <button class="btn confirm-btn" @click="fetch_localhost_data">Fetch</button>
+      <button class="btn confirm-btn" @click="post_localhost_data">POST</button> -->
+      <div> {{ fetched_content }}</div>
     </div>
 
     <div class="right-panel scrollable">
@@ -183,8 +224,8 @@
           <div class="p-name-bar">
             <h4 class="disable-select"> {{ p.name }} </h4>
             <div class="p-name-bar-btn">
-              <button class="edit-btn" @click="" title="Edit Paragraph"><img src="./assets/pen-solid.svg"></button>
-              <button class="remove-btn" @click="remove_para(p)" title="Remove Paragraph"><img src="./assets/xmark-solid.svg"></button>
+              <button class="edit-btn" @click="edit_para(p)" title="Edit Paragraph"><img src="./assets/images/pen-solid.svg"></button>
+              <button class="remove-btn" @click="remove_para(p)" title="Remove Paragraph"><img src="./assets/images/xmark-solid.svg"></button>
             </div>
           </div>
           <p class="s-list">
