@@ -20,9 +20,9 @@ const progress_color = {
 }
 
 const toast_icon_src = ref({
-  'error': '../src/assets/circle-xmark-regular.svg',
-  'success': '../src/assets/circle-check-regular.svg',
-  'warning': '../src/assets/circle-check-regular.svg',
+  'error': '../src/assets/images/circle-xmark-regular.svg',
+  'success': '../src/assets/images/circle-check-regular.svg',
+  'warning': '../src/assets/images/circle-check-regular.svg',
 })
 
 </script>

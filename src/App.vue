@@ -224,8 +224,8 @@
           <div class="p-name-bar">
             <h4 class="disable-select"> {{ p.name }} </h4>
             <div class="p-name-bar-btn">
-              <button class="edit-btn" @click="edit_para(p)" title="Edit Paragraph"><img src="./assets/pen-solid.svg"></button>
-              <button class="remove-btn" @click="remove_para(p)" title="Remove Paragraph"><img src="./assets/xmark-solid.svg"></button>
+              <button class="edit-btn" @click="edit_para(p)" title="Edit Paragraph"><img src="./assets/images/pen-solid.svg"></button>
+              <button class="remove-btn" @click="remove_para(p)" title="Remove Paragraph"><img src="./assets/images/xmark-solid.svg"></button>
             </div>
           </div>
           <p class="s-list">
