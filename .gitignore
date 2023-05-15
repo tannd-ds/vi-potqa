@@ -6,6 +6,7 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+__pycache__
 
 node_modules
 .DS_Store
@@ -21,6 +22,7 @@ coverage
 
 # Editor directories and files
 .vscode/*
+server/.venv
 !.vscode/extensions.json
 .idea
 *.suo
@@ -28,3 +30,6 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+
+# Private Data
+server/data.json
