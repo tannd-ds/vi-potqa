@@ -2,6 +2,7 @@
 
   import { ref, reactive, computed, watch } from 'vue'
   import Toast from './components/Toast.vue'
+  import PageBackground from './components/PageBackground.vue'
 
   const is_show_toast = ref(false)
   const toast_title = ref("")
@@ -130,6 +131,8 @@
     }
     data['answer'] = answer_content.value
 
+    POST_data([data])
+
     confirmed_data.value.push([data])
     localStorage.setItem("data", JSON.stringify(confirmed_data.value))
     show_toast('success', 'Success', 'Save data successfully')
@@ -147,26 +150,28 @@
     setTimeout(function(){is_show_toast.value = false}, 3000)
   }
 
-  const fetched_content = ref("")
-  function fetch_localhost_data() {
-    const url = flask_host
-    fetch(url)
-    .then(response => response.json())  
-    .then(json => {
-        console.log(JSON.parse(json));
-        fetched_content.value = JSON.parse(json)
+  import axios from 'axios';
+
+  function POST_data(post_data) {
+    axios.post(flask_host, {
+      body: post_data
     })
+    .then(response => {
+      console.log(response);
+    })
+    .catch(error => {
+      console.log(error);
+    });
   }
-  function post_localhost_data() {
-    let data = new FormData()
-    // data.append("name": "Flask Room")
-    data.append("description", "Talk about Flask here.")
-    console.log(JSON.stringify(confirmed_data.value))
-    console.log(data)
-    fetch(flask_host, {
-      "method": "POST",
-      "body": JSON.stringify(confirmed_data.value)
-    })
+
+  function GET_data() {
+    axios.get(flask_host)
+      .then(response => {
+        console.log(JSON.parse(response.data['data']))
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
 </script>
@@ -184,78 +189,77 @@
       <template #content>{{ toast_content }}</template>
     </toast>
   </Teleport>
-  <img class="bg-gradient grad-1" src="./assets/Ellipse green-blue.png" />
-  <img class="bg-gradient grad-2" src="./assets/Ellipse pink.png" />
-  <div class="wrapper">
-    <div class="left-panel">
-      <div class="web-title-container">
-        <!-- <img class="app-logo disable-select" src="./assets/flat-head-color.png"> -->
-        <div class="text-title">
-          <h1 class="app-name disable-select">Vi-PotQA</h1>
-          <!-- <h3 class="hashtag disable-select">@tannd-ds & @ndp</h3> -->
-        </div>
-      </div>
-      <div class="p-name">
-        <label class="disable-select" for="name-input">Paragraph Name</label>
-        <input class="input-box" id="name-input" v-model="p_name" placeholder="Paragraph Name" spellcheck="false" autocomplete="off" aria-autocomplete="none">
-      </div>
-      <div class="p-name">
-        <label class="disable-select" for="content-input">Paragraph Content</label>
-        <textarea id="content-input" v-model="p_content" placeholder="Insert your paragraph here" rows="10" spellcheck="false" autocomplete="off" aria-autocomplete="none"></textarea>
-      </div>
-      <button class="btn add-btn" @click="add_para">Add</button>
-      <div class="p-name">
-        <label class="disable-select" for="question-input">Question</label>
-        <input class="input-box" id="question-input" v-model="question_content" placeholder="Question" spellcheck="false" autocomplete="off" aria-autocomplete="none"> 
-      </div>
-      <div class="p-name">
-        <label class="disable-select" for="answer-input">Answer</label>
-        <input class="input-box" id="answer-input" v-model="answer_content" placeholder="Answer" spellcheck="false" autocomplete="off" aria-autocomplete="none"> 
-      </div>
-      <button class="btn confirm-btn" @click="export_data">Confirm</button>
-      <!-- <button class="btn confirm-btn" @click="fetch_localhost_data">Fetch</button>
-      <button class="btn confirm-btn" @click="post_localhost_data">POST</button> -->
-      <div> {{ fetched_content }}</div>
-    </div>
-
-    <div class="right-panel scrollable">
-      <div class="p-list">
-        <div class="p-confirmed" v-for="p in ps" :key="p.name">
-          <div class="p-name-bar">
-            <h4 class="disable-select"> {{ p.name }} </h4>
-            <div class="p-name-bar-btn">
-              <button class="edit-btn" @click="edit_para(p)" title="Edit Paragraph"><img src="./assets/images/pen-solid.svg"></button>
-              <button class="remove-btn" @click="remove_para(p)" title="Remove Paragraph"><img src="./assets/images/xmark-solid.svg"></button>
-            </div>
+  <PageBackground>
+    <div class="wrapper">
+      <div class="left-panel">
+        <div class="web-title-container">
+          <!-- <img class="app-logo disable-select" src="./assets/flat-head-color.png"> -->
+          <div class="text-title">
+            <h1 class="app-name disable-select">Vi-PotQA</h1>
+            <!-- <h3 class="hashtag disable-select">@tannd-ds & @ndp</h3> -->
           </div>
-          <p class="s-list">
-            <span class="s-confirmed" v-for="s in p.content">
-              <span class="word s-index">
-                <input 
-                type="checkbox" 
-                name="optional" 
-                :id="String(find_index_a_in_b(p, ps)) + '-' + String(find_index_a_in_b(s, p.content))" 
-                :value="String(find_index_a_in_b(p, ps)) + '-' + String(find_index_a_in_b(s, p.content))" 
-                v-model="checked_ids"
-                required hidden
-                >
-                <label :for="String(find_index_a_in_b(p, ps)) + '-' + String(find_index_a_in_b(s, p.content))" class="disable-select">[{{ find_index_a_in_b(s, p.content) }}]</label>
+        </div>
+        <div class="p-name">
+          <label class="disable-select" for="name-input">Paragraph Name</label>
+          <input class="input-box" id="name-input" v-model="p_name" placeholder="Paragraph Name" spellcheck="false" autocomplete="off" aria-autocomplete="none">
+        </div>
+        <div class="p-name">
+          <label class="disable-select" for="content-input">Paragraph Content</label>
+          <textarea id="content-input" v-model="p_content" placeholder="Insert your paragraph here" rows="10" spellcheck="false" autocomplete="off" aria-autocomplete="none"></textarea>
+        </div>
+        <button class="btn add-btn" @click="add_para">Add</button>
+        <div class="p-name">
+          <label class="disable-select" for="question-input">Question</label>
+          <input class="input-box" id="question-input" v-model="question_content" placeholder="Question" spellcheck="false" autocomplete="off" aria-autocomplete="none"> 
+        </div>
+        <div class="p-name">
+          <label class="disable-select" for="answer-input">Answer</label>
+          <input class="input-box" id="answer-input" v-model="answer_content" placeholder="Answer" spellcheck="false" autocomplete="off" aria-autocomplete="none"> 
+        </div>
+        <button class="btn confirm-btn" @click="export_data">Confirm</button>
+        <button class="btn confirm-btn" @click="GET_data">GET</button>
+        <button class="btn confirm-btn" @click="POST_data(confirmed_data)">POST</button>
+      </div>
+
+      <div class="right-panel scrollable">
+        <div class="p-list">
+          <div class="p-confirmed" v-for="p in ps" :key="p.name">
+            <div class="p-name-bar">
+              <h4 class="disable-select"> {{ p.name }} </h4>
+              <div class="p-name-bar-btn">
+                <button class="edit-btn" @click="edit_para(p)" title="Edit Paragraph"><img src="./assets/images/pen-solid.svg"></button>
+                <button class="remove-btn" @click="remove_para(p)" title="Remove Paragraph"><img src="./assets/images/xmark-solid.svg"></button>
+              </div>
+            </div>
+            <p class="s-list">
+              <span class="s-confirmed" v-for="s in p.content">
+                <span class="word s-index">
+                  <input 
+                  type="checkbox" 
+                  name="optional" 
+                  :id="String(find_index_a_in_b(p, ps)) + '-' + String(find_index_a_in_b(s, p.content))" 
+                  :value="String(find_index_a_in_b(p, ps)) + '-' + String(find_index_a_in_b(s, p.content))" 
+                  v-model="checked_ids"
+                  required hidden
+                  >
+                  <label :for="String(find_index_a_in_b(p, ps)) + '-' + String(find_index_a_in_b(s, p.content))" class="disable-select">[{{ find_index_a_in_b(s, p.content) }}]</label>
+                </span>
+                <span class="word" v-for="w in sentence_to_word(s)">
+                  <input 
+                  type="checkbox" 
+                  name="optional" 
+                  :id="String(find_index_a_in_b(p, ps)) + '-' + String(find_index_a_in_b(s, p.content))" 
+                  :value="String(find_index_a_in_b(p, ps)) + '-' + String(find_index_a_in_b(s, p.content))" 
+                  v-model="checked_ids"
+                  required hidden
+                  >
+                  <label :for="String(find_index_a_in_b(p, ps)) + '-' + String(find_index_a_in_b(s, p.content))" class="disable-select">{{ w }}</label>
+                </span>
               </span>
-              <span class="word" v-for="w in sentence_to_word(s)">
-                <input 
-                type="checkbox" 
-                name="optional" 
-                :id="String(find_index_a_in_b(p, ps)) + '-' + String(find_index_a_in_b(s, p.content))" 
-                :value="String(find_index_a_in_b(p, ps)) + '-' + String(find_index_a_in_b(s, p.content))" 
-                v-model="checked_ids"
-                required hidden
-                >
-                <label :for="String(find_index_a_in_b(p, ps)) + '-' + String(find_index_a_in_b(s, p.content))" class="disable-select">{{ w }}</label>
-              </span>
-            </span>
-          </p>
+            </p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </PageBackground>
 </template>
