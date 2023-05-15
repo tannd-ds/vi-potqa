@@ -10,25 +10,15 @@
   overflow: hidden;
 }
 
-html {
-  background-color: var(--black);
-
-}
-
 * {
   
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: 'Montserrat', sans-serif;
-  /* color: var(--primary-accent-color); */
-  /* font-weight: 700; */
-  /* font-size: 0.84vw; */
-
 }
 
 #app {
-  /* background: linear-gradient(135deg, rgba(246,255,222,1) 0%, rgba(227,242,193,1) 33%, rgba(201,219,178,1) 65%, rgba(170,200,167,1) 100%); */
 }
 
 .wrapper {
@@ -242,24 +232,6 @@ html {
 }
 
 /* ----- General ----- */
-.bg-gradient {
-  position: absolute;
-
-  z-index: -1;
-}
-
-.bg-gradient.grad-1 {
-  width: 100%;
-  height: auto;
-  top: -120vh;
-  left: -40vw;
-}
-
-.bg-gradient.grad-2 {
-  width: 90%;
-  bottom: -80vh;
-  right: -45vw;
-}
 
 .scrollable {
    overflow-y: auto;
