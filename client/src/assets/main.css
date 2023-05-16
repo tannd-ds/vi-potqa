@@ -67,36 +67,6 @@
   font-style: italic;
 }
 
-.p-name {
-  display: flex;
-  flex-direction: column; 
-  gap: 0.5em;
-}
-
-.p-name input, textarea {
-  padding: 1.5em 1em;
-  background-color: rgba(255, 255, 255, 0.1);
-  border: transparent;
-  border-radius: var(--base-border-radius);
-  color: var(--primary-accent-color);
-  /* border: 0.3em solid rgba(0, 0, 0, 1); */
-}
-
-.p-name textarea {
-  padding: 1em 1em;
-  font-size: 100%;
-  line-height: 1.5em;
-}
-
-.p-name input:focus, textarea:focus {
-  outline: none;
-  transition: all 0.2s ease;
-}
-
-.input-box {
-  height: 2vh;
-}
-
 .btn {
   width: 20%;
   height: 3em;
