@@ -1,7 +1,7 @@
 <template>
   <div class="bg">
-    <img class="bg-gradient grad-1" src="@/assets/images/Ellipse green-blue.png" />
-    <img class="bg-gradient grad-2" src="@/assets/images/Ellipse pink.png" />
+    <img class="bg-gradient grad-1" src="../assets/images/Ellipse green-blue.png" />
+    <img class="bg-gradient grad-2" src="../assets/images/Ellipse pink.png" />
 
     <slot></slot>
   </div>
@@ -12,6 +12,7 @@
 
 <style scoped>
 .bg {
+  width: 100%;
   background-color: black;
   position: absolute;
   z-index: -2;

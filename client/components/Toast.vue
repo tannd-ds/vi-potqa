@@ -1,32 +1,3 @@
-<script setup>
-
-import { ref } from 'vue'
-
-const props = defineProps({
-  show: Boolean,
-  type: String,
-})
-
-const toast_color = {
-  'error': '#CC3636',
-  'success': '#03C988',
-  'warning': '#F7C04A',
-}
-
-const progress_color = {
-  'error': '#DDF7E3',
-  'success': '#DDF7E3',
-  'warning': '#DDF7E3',
-}
-
-const toast_icon_src = ref({
-  'error': '../src/assets/images/circle-xmark-regular.svg',
-  'success': '../src/assets/images/circle-check-regular.svg',
-  'warning': '../src/assets/images/circle-check-regular.svg',
-})
-
-</script>
-
 <template>
   <Transition name="slide-fade">
       <div class="toast-wrapper" v-if="show">
@@ -50,6 +21,38 @@ const toast_icon_src = ref({
       </div>
   </Transition>
 </template>
+
+<script setup>
+
+import { ref } from 'vue'
+
+const props = defineProps({
+  show: Boolean,
+  type: String,
+})
+
+const toast_color = {
+  'error': '#CC3636',
+  'success': '#03C988',
+  'warning': '#F7C04A',
+}
+
+const progress_color = {
+  'error': '#DDF7E3',
+  'success': '#DDF7E3',
+  'warning': '#DDF7E3',
+}
+
+const toast_icon_src = ref({
+  // 'error': '../assets/images/Ellipse green-blue.png',
+  'error': '../assets/images/circle-xmark-regular.svg',
+  // 'error': '../assets/images/circle-xmark-regular.svg',
+  'success': '../assets/images/circle-check-regular.svg',
+  'warning': '../assets/images/circle-check-regular.svg',
+})
+
+</script>
+
 
 <style scoped>
 
