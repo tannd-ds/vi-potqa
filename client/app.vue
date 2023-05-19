@@ -83,10 +83,28 @@
     setTimeout(function(){is_show_toast.value = false}, 3000)
   }
 
+  const { $axios } = useNuxtApp()
   function POST_data(post_data) {
+    $axios.post($axios.defaults.baseURL, {
+      body: post_data
+    })
+    .then(response => {
+      console.log(response);
+    })
+    .catch(error => {
+      console.log(error);
+    });
   }
 
   function GET_data() {
+    const flask_host = 'http://localhost:8989/json'
+    $axios.get($axios.defaults.baseURL)
+      .then(response => {
+        console.log(JSON.parse(response.data['data']))
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
 </script>
@@ -112,7 +130,6 @@
             <h1 class="app-name disable-select">Vi-PotQA</h1>
           </div>
         </div>
-        <div> {{ current_input.checked_ids }}</div>
         <InputWithLabel 
           :type="`input`"
           :id="`name-input`"
@@ -153,7 +170,6 @@
             :p_name="p.name"
             :p_index="p_index"
         >
-          <p class="s-list">
             <span class="s-confirmed" v-for="(s, s_index) in p.content">
               <span class="word s-index">
                 <label :for="`${p_index}-${s_index}`" class="disable-select">[{{ s_index }}]</label>
@@ -170,7 +186,6 @@
                 <label :for="`${p_index}-${s_index}`" class="disable-select">{{ w }}</label>
               </span>
             </span>
-          </p>
         </Context>
       </div>
     </div>
