@@ -12,7 +12,8 @@ export const useAnnotationInputStore = defineStore('annotation_input', {
             question_content: "",
             answer_content: "",
             checked_ids: [],
-            contexts: []
+            contexts: [],
+            edit_p_index: 0,
         }
     },
     actions: {

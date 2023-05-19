@@ -1,6 +1,7 @@
 <script setup>
   import { ref, reactive, computed, watch } from 'vue'
   import { useAnnotationInputStore } from './stores/annotationInput';
+  import { useGeneralStore } from './stores/generalStore'
 
   const is_show_toast = ref(false)
   const toast_title = ref("")
@@ -8,6 +9,7 @@
   const toast_type = ref("success")
 
   const current_input = useAnnotationInputStore()
+  const general_store = useGeneralStore()
 
   const confirmed_data = ref([])
 
@@ -112,7 +114,6 @@
 <template>
   <Teleport to="body">
     <toast 
-      :class="{ active: is_show_toast }" 
       :show="is_show_toast" 
       :type="toast_type" 
       @close="is_show_toast=false" 
@@ -122,6 +123,14 @@
       <template #content>{{ toast_content }}</template>
     </toast>
   </Teleport>
+  <Teleport to="body">
+    <OverlayEditContext
+      :show="general_store.is_show_overlay"
+      :context_index="0"
+    >
+
+    </OverlayEditContext>
+  </Teleport>
   <PageBackground>
     <div class="wrapper">
       <div class="left-panel scrollable">
@@ -130,6 +139,7 @@
             <h1 class="app-name disable-select">Vi-PotQA</h1>
           </div>
         </div>
+        <button @click="general_store.is_show_overlay=true">Toggle Overlay</button>
         <InputWithLabel 
           :type="`input`"
           :id="`name-input`"
@@ -165,28 +175,28 @@
       </div>
 
       <div class="right-panel scrollable">
-        <Context
-          v-for="(p, p_index) in current_input.contexts" :key="p.name"
-            :p_name="p.name"
-            :p_index="p_index"
-        >
-            <span class="s-confirmed" v-for="(s, s_index) in p.content">
-              <span class="word s-index">
-                <label :for="`${p_index}-${s_index}`" class="disable-select">[{{ s_index }}]</label>
+          <Context
+            v-for="(p, p_index) in current_input.contexts" :key="p.name"
+              :p_name="p.name"
+              :p_index="p_index"
+          >
+              <span class="s-confirmed" v-for="(s, s_index) in p.content">
+                <span class="word s-index">
+                  <label :for="`${p_index}-${s_index}`" class="disable-select">[{{ s_index }}]</label>
+                </span>
+                <span class="word" v-for="w in sentence_to_word(s)">
+                  <input 
+                  type="checkbox" 
+                  name="optional" 
+                  :id="`${p_index}-${s_index}`" 
+                  :value="`${p_index}-${s_index}`"
+                  v-model="current_input.checked_ids"
+                  required hidden
+                  >
+                  <label :for="`${p_index}-${s_index}`" class="disable-select">{{ w }}</label>
+                </span>
               </span>
-              <span class="word" v-for="w in sentence_to_word(s)">
-                <input 
-                type="checkbox" 
-                name="optional" 
-                :id="`${p_index}-${s_index}`" 
-                :value="`${p_index}-${s_index}`"
-                v-model="current_input.checked_ids"
-                required hidden
-                >
-                <label :for="`${p_index}-${s_index}`" class="disable-select">{{ w }}</label>
-              </span>
-            </span>
-        </Context>
+          </Context>
       </div>
     </div>
   </PageBackground>

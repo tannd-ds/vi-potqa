@@ -146,3 +146,18 @@
   color: var(--primary-accent-color);
   line-height: 1.5em;
 }
+
+.icon-btn {
+  width: 2rem;
+  border: none;
+  background-color: transparent;
+  align-items: center;
+  opacity: 20%;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.icon-btn:hover {
+  opacity: 100%;
+  transition: all 0.3s ease;
+}

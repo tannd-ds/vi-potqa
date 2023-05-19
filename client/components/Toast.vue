@@ -1,25 +1,25 @@
 <template>
-  <Transition name="slide-fade">
-      <div class="toast-wrapper" v-if="show">
-        <div  class="content-wrapper">
-          <img :src="toast_icon_src[type]" />
-          <div class="text-container">
-            <h3>
-              <slot name="title">
-                Sucess
-              </slot>
-            </h3>
-           
-            <p>
-              <slot name="content">
-                Run successfully failed.
-              </slot>
-            </p>
+    <Transition name="slide-fade">
+        <div class="toast-wrapper" v-if="show">
+          <div  class="content-wrapper">
+            <img :src="toast_icon_src[type]" />
+            <div class="text-container">
+              <h3>
+                <slot name="title">
+                  Sucess
+                </slot>
+              </h3>
+            
+              <p>
+                <slot name="content">
+                  Run successfully failed.
+                </slot>
+              </p>
+            </div>
           </div>
+          <div class="progress-bar active"></div>
         </div>
-        <div class="progress-bar active"></div>
-      </div>
-  </Transition>
+    </Transition>
 </template>
 
 <script setup>
@@ -77,8 +77,6 @@ const toast_icon_src = ref({
   right: 2em;
   background-color: v-bind(toast_color[type]);
   border-radius: 0.5em;
-  /* box-shadow: 0px 0.3em rgba(0, 0, 0, 1);
-  border: 0.3em solid rgba(0, 0, 0, 1); */
   overflow: hidden;
   z-index: 999;
   cursor: pointer;
