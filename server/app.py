@@ -6,7 +6,7 @@ import json
 app = Flask(__name__)
 CORS(app)
 
-df = pd.read_json("./data.json")
+df = pd.read_json("data.json")
 
 def save_to_db(data):
     global df

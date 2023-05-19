@@ -3,6 +3,7 @@
   import { ref, reactive, computed, watch } from 'vue'
   import Toast from './components/Toast.vue'
   import PageBackground from './components/PageBackground.vue'
+  import InputWithLabel from './components/InputWithLabel.vue'
 
   const is_show_toast = ref(false)
   const toast_title = ref("")
@@ -10,10 +11,13 @@
   const toast_type = ref("success")
 
   const ps = ref([])
-  const p_name = ref("")
-  const p_content = ref("")
-  const question_content = ref("")
-  const answer_content = ref("")
+  const current_input = ref({
+    p_name: "",
+    p_content: "",
+    question_content: "",
+    answer_content: "",
+  })
+
   const checked_ids = ref([])
   const confirmed_data = ref([])
 
@@ -36,12 +40,12 @@
   function add_para() {
     if (hasValidInput()) {
       const p_temp = {
-        name: p_name.value,
-        content: para_to_sentences(p_content.value)
+        name: current_input.value.p_name,
+        content: para_to_sentences(current_input.value.p_content)
       }
       ps.value.push(p_temp)
       localStorage.setItem("current_ps", JSON.stringify(ps.value))
-      p_name.value = p_content.value = ''
+      current_input.value.p_name = current_input.value.p_content = ''
     }
     else {
       show_toast('error', 'Fail', 'Paragraph\'s name or content is empty')
@@ -81,7 +85,7 @@
   }
 
   function hasValidInput() {
-    return p_name.value.trim() && p_content.value.trim()
+    return current_input.value.p_name.trim() && current_input.value.p_content.trim()
   }
 
   function ids_to_names() {
@@ -119,17 +123,17 @@
     }
     data['facts'] = ids_to_names()
     
-    if (question_content.value == "") {
+    if (current_input.value.question_content == "") {
       show_toast('error', 'Empty Question', 'Please add a Question')
       return 
     }
-    data['question'] = question_content.value
+    data['question'] = current_input.value.question_content
     
-    if (answer_content.value == "") {
+    if (current_input.value.answer_content== "") {
       show_toast('error', 'Empty Answer', 'Please add an Answer')
       return 
     }
-    data['answer'] = answer_content.value
+    data['answer'] = current_input.value.answer_content
 
     POST_data([data])
 
@@ -193,29 +197,39 @@
     <div class="wrapper">
       <div class="left-panel">
         <div class="web-title-container">
-          <!-- <img class="app-logo disable-select" src="./assets/flat-head-color.png"> -->
           <div class="text-title">
             <h1 class="app-name disable-select">Vi-PotQA</h1>
-            <!-- <h3 class="hashtag disable-select">@tannd-ds & @ndp</h3> -->
           </div>
         </div>
-        <div class="p-name">
-          <label class="disable-select" for="name-input">Paragraph Name</label>
-          <input class="input-box" id="name-input" v-model="p_name" placeholder="Paragraph Name" spellcheck="false" autocomplete="off" aria-autocomplete="none">
-        </div>
-        <div class="p-name">
-          <label class="disable-select" for="content-input">Paragraph Content</label>
-          <textarea id="content-input" v-model="p_content" placeholder="Insert your paragraph here" rows="10" spellcheck="false" autocomplete="off" aria-autocomplete="none"></textarea>
-        </div>
+        <InputWithLabel 
+          :type="`input`"
+          :id="`name-input`"
+          :label_name="`Paragraph Name`"
+          :placeholder="`Input Paragraph Name`"
+          v-model:model-value="current_input.p_name"
+        />
+        <InputWithLabel 
+          :type="`textarea`"
+          :id="`context-input`"
+          :label_name="`Paragraph Content`"
+          :placeholder="`Input Paragraph Content`"
+          v-model:model-value="current_input.p_content"
+        />
         <button class="btn add-btn" @click="add_para">Add</button>
-        <div class="p-name">
-          <label class="disable-select" for="question-input">Question</label>
-          <input class="input-box" id="question-input" v-model="question_content" placeholder="Question" spellcheck="false" autocomplete="off" aria-autocomplete="none"> 
-        </div>
-        <div class="p-name">
-          <label class="disable-select" for="answer-input">Answer</label>
-          <input class="input-box" id="answer-input" v-model="answer_content" placeholder="Answer" spellcheck="false" autocomplete="off" aria-autocomplete="none"> 
-        </div>
+        <InputWithLabel 
+          :type="`input`"
+          :id="`question-content`"
+          :label_name="`Question`"
+          :placeholder="`Input Question`"
+          v-model:model-value="current_input.question_content"
+        />
+        <InputWithLabel 
+          :type="`input`"
+          :id="`answer-content`"
+          :label_name="`Answer`"
+          :placeholder="`Input Answer`"
+          v-model:model-value="current_input.answer_content"
+        />
         <button class="btn confirm-btn" @click="export_data">Confirm</button>
         <button class="btn confirm-btn" @click="GET_data">GET</button>
         <button class="btn confirm-btn" @click="POST_data(confirmed_data)">POST</button>
@@ -223,7 +237,7 @@
 
       <div class="right-panel scrollable">
         <div class="p-list">
-          <div class="p-confirmed" v-for="p in ps" :key="p.name">
+          <div class="p-confirmed" v-for="(p, p_index) in ps" :key="p.name">
             <div class="p-name-bar">
               <h4 class="disable-select"> {{ p.name }} </h4>
               <div class="p-name-bar-btn">
@@ -232,28 +246,28 @@
               </div>
             </div>
             <p class="s-list">
-              <span class="s-confirmed" v-for="s in p.content">
+              <span class="s-confirmed" v-for="(s, s_index) in p.content">
                 <span class="word s-index">
                   <input 
                   type="checkbox" 
                   name="optional" 
-                  :id="String(find_index_a_in_b(p, ps)) + '-' + String(find_index_a_in_b(s, p.content))" 
-                  :value="String(find_index_a_in_b(p, ps)) + '-' + String(find_index_a_in_b(s, p.content))" 
+                  :id="`${p_index}-${s_index}`" 
+                  :value="`${p_index}-${s_index}`" 
                   v-model="checked_ids"
                   required hidden
                   >
-                  <label :for="String(find_index_a_in_b(p, ps)) + '-' + String(find_index_a_in_b(s, p.content))" class="disable-select">[{{ find_index_a_in_b(s, p.content) }}]</label>
+                  <label :for="`${p_index}-${s_index}`" class="disable-select">[{{ s_index }}]</label>
                 </span>
                 <span class="word" v-for="w in sentence_to_word(s)">
                   <input 
                   type="checkbox" 
                   name="optional" 
-                  :id="String(find_index_a_in_b(p, ps)) + '-' + String(find_index_a_in_b(s, p.content))" 
-                  :value="String(find_index_a_in_b(p, ps)) + '-' + String(find_index_a_in_b(s, p.content))" 
+                  :id="`${p_index}-${s_index}`" 
+                  :value="`${p_index}-${s_index}`"
                   v-model="checked_ids"
                   required hidden
                   >
-                  <label :for="String(find_index_a_in_b(p, ps)) + '-' + String(find_index_a_in_b(s, p.content))" class="disable-select">{{ w }}</label>
+                  <label :for="`${p_index}-${s_index}`" class="disable-select">{{ w }}</label>
                 </span>
               </span>
             </p>
