@@ -175,28 +175,7 @@
       </div>
 
       <div class="right-panel scrollable">
-          <Context
-            v-for="(p, p_index) in current_input.contexts" :key="p.name"
-              :p_name="p.name"
-              :p_index="p_index"
-          >
-              <span class="s-confirmed" v-for="(s, s_index) in p.content">
-                <span class="word s-index">
-                  <label :for="`${p_index}-${s_index}`" class="disable-select">[{{ s_index }}]</label>
-                </span>
-                <span class="word" v-for="w in sentence_to_word(s)">
-                  <input 
-                  type="checkbox" 
-                  name="optional" 
-                  :id="`${p_index}-${s_index}`" 
-                  :value="`${p_index}-${s_index}`"
-                  v-model="current_input.checked_ids"
-                  required hidden
-                  >
-                  <label :for="`${p_index}-${s_index}`" class="disable-select">{{ w }}</label>
-                </span>
-              </span>
-          </Context>
+        <ContextList></ContextList>
       </div>
     </div>
   </PageBackground>
