@@ -1,5 +1,5 @@
 <script setup>
-  import { ref, reactive, computed, watch } from 'vue'
+  import { ref } from 'vue'
   import { useAnnotationInputStore } from './stores/annotationInput';
   import { useGeneralStore } from './stores/generalStore'
 
@@ -12,15 +12,6 @@
   const general_store = useGeneralStore()
 
   const confirmed_data = ref([])
-
-  // Load data from LocalStorage
-  // load_state()
-  // function load_state() {
-  //   let confirmed_local = localStorage.getItem("data")
-  //   confirmed_data.value = (confirmed_local == null) ? [] : JSON.parse(confirmed_local) 
-  //   let ps_local = localStorage.getItem("current_ps")
-  //   ps = (ps_local == null) ? [] : JSON.parse(ps_local)
-  // }
 
   function ids_to_names() {
     let ids = current_input.checked_ids
@@ -99,7 +90,6 @@
   }
 
   function GET_data() {
-    const flask_host = 'http://localhost:8989/json'
     $axios.get($axios.defaults.baseURL)
       .then(response => {
         console.log(JSON.parse(response.data['data']))
@@ -139,7 +129,6 @@
             <h1 class="app-name disable-select">Vi-PotQA</h1>
           </div>
         </div>
-        <button @click="general_store.is_show_overlay=true">Toggle Overlay</button>
         <InputWithLabel 
           :type="`input`"
           :id="`name-input`"
@@ -171,11 +160,10 @@
         />
         <button class="btn confirm-btn" @click="export_data">Confirm</button>
         <button class="btn confirm-btn" @click="GET_data">GET</button>
-        <button class="btn confirm-btn" @click="POST_data(confirmed_data)">POST</button>
       </div>
 
       <div class="right-panel scrollable">
-        <ContextList></ContextList>
+        <ContextList />
       </div>
     </div>
   </PageBackground>

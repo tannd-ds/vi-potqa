@@ -8,7 +8,7 @@
                 class="icon-btn"
                 @click="general_store.is_show_overlay=false"
             >
-                X
+                <Icon name="fa6-solid:xmark" color="white" />
             </button>
             <slot> Content </slot>
 
@@ -34,7 +34,7 @@ const props = defineProps({
     height: 100vh;
     width: 100vw;
     position: absolute;
-    background-color: hsla(0, 0%, 0%, 0.7);
+    background-color: hsla(0, 0%, 0%, 0.5   );
     display: flex;
     align-items: center;
     justify-content: center;
@@ -46,6 +46,7 @@ const props = defineProps({
     display: flex;
     flex-direction: column;
     gap: 1em;
+    background-color: black;
 }
 
 button {

@@ -50,18 +50,20 @@ function sentence_to_word(sentence) {
 
 .list-leave-active {
   position: absolute;
+  max-width: 45%; /* Prevent Context Item from changing width during leaving */
 }
 
 .list-enter-from, 
 .list-leave-to {
   opacity: 0;
+}
+
+.list-enter-from {
   transform: translateX(-50px);
 }
 
-ul {
-    display: flex;
-    flex-direction: column;
-    gap: 1em;
+ul li {
+  list-style-type: none;
 }
 
 
