@@ -1,11 +1,6 @@
 import { defineStore } from 'pinia'
 import { useGeneralStore } from './generalStore'
 
-function is_valid_p(p_name, sentences) {
-  return p_name && sentences != []
-}
-
-
 export const useAnnotationInputStore = defineStore('annotation_input', {
     state: () => {
         return { 
@@ -32,16 +27,16 @@ export const useAnnotationInputStore = defineStore('annotation_input', {
         },
         add_context() {
             const general_store = useGeneralStore()
-            let sentences = this.get_new_sentences
-            if (is_valid_p(this.new_p_name, sentences)) {
+            if (this.is_valid_context) {
+                let sentences = this.get_sentences
                 let new_context = {
-                name: this.new_p_name,
+                name: (this.new_p_name) ? this.new_p_name : this.get_unique_context_name,
                 content: sentences
                 }
                 this.contexts.push(new_context)
             }
             else {
-                general_store.show_toast('error', 'Fail', 'Paragraph\'s name or content is empty')
+                general_store.show_toast('error', 'Fail', 'Paragraph\'s content is empty!')
             }
         },
         remove_context(context_id) {
@@ -102,7 +97,10 @@ export const useAnnotationInputStore = defineStore('annotation_input', {
         }
     },
     getters: {
-        get_new_sentences() {
+        is_valid_context() {
+            return this.new_p_content.trim()
+        },
+        get_sentences() {
             return this.new_p_content.split(/(?<=[.!?])\s+/)
         },
         get_contexts_names() {
@@ -122,6 +120,20 @@ export const useAnnotationInputStore = defineStore('annotation_input', {
             for (let i = 0; i < this.contexts.length; i++)
                 simplified_contexts.push([this.contexts[i].name, this.contexts[i].content])
             return simplified_contexts
+        },
+        get_unique_context_name() {
+            let chars = ['A', 'B', 'C', 'D', 'E', 'F']
+            for (let char_index = 0; char_index < chars.length; char_index++) {
+                let used = false
+                for (let context_index = 0; context_index < this.contexts.length & !used; context_index++) {
+                    if (this.contexts[context_index].name.trim() == `Paragraph ${chars[char_index]}`) {
+                        used = true
+                    }
+                }
+                if (!used) return `Paragraph ${chars[char_index]}`
+            }
+            return '??'
+
         }
     }
   

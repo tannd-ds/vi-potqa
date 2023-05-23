@@ -6,8 +6,6 @@
   const current_input = useAnnotationInputStore()
   const general_store = useGeneralStore()
 
-  const confirmed_data = ref([])
-
   function export_data() {
     let data = {}
 
@@ -34,9 +32,6 @@
     data['answer'] = current_input.answer_content
 
     POST_data([data])
-
-    // confirmed_data.value.push([data])
-    // localStorage.setItem("data", JSON.stringify(confirmed_data.value))
     show_toast('success', 'Success', 'Save data successfully')
   }
 
@@ -80,7 +75,7 @@
           :type="`input`"
           :id="`name-input`"
           :label_name="`Paragraph Name`"
-          :placeholder="`Input Paragraph Name`"
+          :placeholder="`(Optional) Input Paragraph Name`"
           v-model:model-value="current_input.new_p_name"
         />
         <InputWithLabel 
