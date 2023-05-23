@@ -5,6 +5,7 @@ function is_valid_p(p_name, sentences) {
   return p_name && sentences != []
 }
 
+
 export const useAnnotationInputStore = defineStore('annotation_input', {
     state: () => {
         return { 
@@ -14,7 +15,11 @@ export const useAnnotationInputStore = defineStore('annotation_input', {
             answer_content: "",
             checked_ids: [],
             contexts: [],
-            edit_p_index: 0,
+            edit_context: {
+                original_index: null,
+                name: "",
+                content: "",
+            }
         }
     },
     actions: {
@@ -43,8 +48,20 @@ export const useAnnotationInputStore = defineStore('annotation_input', {
             this.contexts = this.contexts.slice(0, context_id).concat(this.contexts.slice(context_id+1))
             this.update_checked_id(context_id)
         },
-        edit_context(context_id) {
-            return true  
+        show_edit_context(context_id) {
+            const general_store = useGeneralStore()
+            this.edit_context.original_index = context_id
+            this.edit_context.name = this.contexts[context_id]['name']
+            this.edit_context.content = this.contexts[context_id]['content'].join(" ")
+            general_store.is_show_overlay = true
+            
+        },
+        save_edit_context() {
+            const general_store = useGeneralStore()
+
+            this.contexts[this.edit_context.original_index].name = this.edit_context.name
+            this.contexts[this.edit_context.original_index].content = this.edit_context.content.split(/(?<=[.!?])\s+/)
+            general_store.is_show_overlay = false
         },
         update_checked_id(removed_p_id) {
             let ids = this.checked_ids
@@ -82,6 +99,12 @@ export const useAnnotationInputStore = defineStore('annotation_input', {
                 result.push([this.contexts[p_id].name, Number(s_id)])
             }
             return result
+        },
+        get_simplified_contexts() {
+            let simplified_contexts = []
+            for (let i = 0; i < this.contexts.length; i++)
+                simplified_contexts.push([this.contexts[i].name, this.contexts[i].content])
+            return simplified_contexts
         }
     }
   

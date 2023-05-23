@@ -28,10 +28,7 @@
       return 
     }
 
-    let ps_simplified = []
-    for (let i = 0; i < current_input.contexts.length; i++)
-      ps_simplified.push([current_input.contexts[i].name, current_input.contexts[i].content])
-    data['contexts'] = ps_simplified
+    data['contexts'] = current_input.get_simplified_contexts
     data['facts'] = current_input.get_contexts_names
     data['question'] = current_input.question_content
     data['answer'] = current_input.answer_content
@@ -42,19 +39,6 @@
     // localStorage.setItem("data", JSON.stringify(confirmed_data.value))
     show_toast('success', 'Success', 'Save data successfully')
   }
-
-  function sentence_to_word(sentence) {
-    return sentence.split(" ")
-  }
-
-  // function show_toast(type='sucess', title, content) {
-  //   general_store.toast.type = type
-  //   general_store.toast.title = title
-  //   general_store.toast.content = content
-  //   general_store.toast.is_show = true
-  //   setTimeout(function(){general_store.toast.is_show = false}, 3000)
-  //   console.log(general_store.toast.is_show)
-  // }
 
   const { $axios } = useNuxtApp()
   function POST_data(post_data) {
@@ -82,16 +66,8 @@
 </script>
 
 <template>
-  <Teleport to="body">
-    <Toast />
-  </Teleport>
-  <Teleport to="body">
-    <OverlayEditContext
-      :show="general_store.is_show_overlay"
-      :context_index="0"
-    >
-    </OverlayEditContext>
-  </Teleport>
+  <Teleport to="body"> <Toast /> </Teleport>
+  <Teleport to="body"> <OverlayEditContext /> </Teleport>
   <PageBackground>
     <div class="wrapper">
       <div class="left-panel scrollable">
@@ -114,7 +90,7 @@
           :placeholder="`Input Paragraph Content`"
           v-model:model-value="current_input.new_p_content"
         />
-        <button class="btn add-btn" @click="current_input.add_context(current_input.get_p_name_and_sentences)">Add</button>
+        <button class="btn add-btn" @click="current_input.add_context">Add</button>
         <InputWithLabel 
           :type="`input`"
           :id="`question-content`"

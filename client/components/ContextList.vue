@@ -5,8 +5,8 @@
             :key="p.name"
         >
             <Context
-                :p_name="p.name"
-                :p_index="p_index"
+                :context_name="p.name"
+                :context_index="p_index"
             >
                 <span class="s-confirmed" v-for="(s, s_index) in p.content">
                   <span class="word s-index">
@@ -50,7 +50,7 @@ function sentence_to_word(sentence) {
 
 .list-leave-active {
   position: absolute;
-  max-width: 45%; /* Prevent Context Item from changing width during leaving */
+  width: 45%; /* Prevent Context Item from changing width during leaving */
 }
 
 .list-enter-from, 
