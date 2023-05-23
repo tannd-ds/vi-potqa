@@ -2,7 +2,7 @@
     <Transition name="slide-fade">
         <div class="toast-wrapper" v-if="show">
           <div  class="content-wrapper">
-            <img :src="toast_icon_src[type]" />
+            <Icon :name="toast_icon_src[type]" size="3em"/>
             <div class="text-container">
               <h3>
                 <slot name="title">
@@ -38,17 +38,15 @@ const toast_color = {
 }
 
 const progress_color = {
-  'error': '#DDF7E3',
-  'success': '#DDF7E3',
-  'warning': '#DDF7E3',
+  'warning': 'hsl(134, 62%, 92%, 0.7)',
+  'error': 'hsl(134, 62%, 92%, 0.7)',
+  'success': 'hsl(134, 62%, 92%, 0.7)',
 }
 
 const toast_icon_src = ref({
-  // 'error': '../assets/images/Ellipse green-blue.png',
-  'error': '../assets/images/circle-xmark-regular.svg',
-  // 'error': '../assets/images/circle-xmark-regular.svg',
-  'success': '../assets/images/circle-check-regular.svg',
-  'warning': '../assets/images/circle-check-regular.svg',
+  'error': "material-symbols:error-outline-rounded",
+  'success': "material-symbols:check-circle-outline-rounded",
+  'warning': "material-symbols:check-circle-outline-rounded",
 })
 
 </script>
@@ -86,7 +84,6 @@ const toast_icon_src = ref({
   padding: 1em 1.5em;
   display: flex;
   gap: 1em;
-
 }
 
 img {
