@@ -62,7 +62,7 @@ const props = defineProps({
     display: flex;
     flex-direction: column;
     gap: 1em;
-    background-color: black;
+    background-color: var(--black);
 }
 
 button {

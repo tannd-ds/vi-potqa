@@ -13,7 +13,7 @@
 <style scoped>
 .bg {
   width: 100%;
-  background-color: black;
+  background-color: var(--black);
   position: absolute;
   z-index: -2;
 }

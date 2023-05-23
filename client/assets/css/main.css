@@ -1,11 +1,7 @@
 :root {
   --primary-accent-color: #F1F5FF;
-  --secondary-accent-color: #AFD3E2;
-
   --black: #060627;
-  --black-1: #146C94;
-
-  --base-border-radius: 0.5em;
+  --base-border-radius: 0.25em;
 
   overflow: hidden;
 }
@@ -59,6 +55,7 @@
   height: 3em;
   background-color: #00FFCA;
   border-radius: var(--base-border-radius);
+  color: var(--black);
   border: transparent;
   cursor: pointer;
   transition: all 0.3s ease;

@@ -44,6 +44,10 @@
     height: 2vh;
 }
 
+.container input, textarea {
+    font-size: 1.1em;
+}
+
 .container input:focus, textarea:focus {
     outline: none;
 }
