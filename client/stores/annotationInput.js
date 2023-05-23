@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { useGeneralStore } from './generalStore'
 
 function is_valid_p(p_name, sentences) {
   return p_name && sentences != []
@@ -25,6 +26,7 @@ export const useAnnotationInputStore = defineStore('annotation_input', {
             this.checked_ids= []
         },
         add_context() {
+            const general_store = useGeneralStore()
             let sentences = this.get_new_sentences
             if (is_valid_p(this.new_p_name, sentences)) {
                 let new_context = {
@@ -34,12 +36,15 @@ export const useAnnotationInputStore = defineStore('annotation_input', {
                 this.contexts.push(new_context)
             }
             else {
-                // show_toast('error', 'Fail', 'Paragraph\'s name or content is empty')
+                general_store.show_toast('error', 'Fail', 'Paragraph\'s name or content is empty')
             }
         },
         remove_context(context_id) {
             this.contexts = this.contexts.slice(0, context_id).concat(this.contexts.slice(context_id+1))
             this.update_checked_id(context_id)
+        },
+        edit_context(context_id) {
+            return true  
         },
         update_checked_id(removed_p_id) {
             let ids = this.checked_ids
