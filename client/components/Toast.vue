@@ -1,11 +1,37 @@
+<template>
+    <Transition name="slide-fade">
+      <div class="toast-wrapper" 
+        v-if="general_store.toast.is_show"
+        @click="general_store.toast.is_show=false"
+      >
+        <div  class="content-wrapper">
+          <Icon :name="toast_icon_src[general_store.toast.type]" size="3em"/>
+          <div class="text-container">
+            <h3>
+              <slot name="title">
+                {{ general_store.toast.title }}
+              </slot>
+            </h3>
+          
+            <p>
+              <slot name="content">
+                {{  general_store.toast.content }}
+              </slot>
+            </p>
+          </div>
+        </div>
+        <div class="progress-bar active"></div>
+      </div>
+    </Transition>
+</template>
+
 <script setup>
 
 import { ref } from 'vue'
+import { useGeneralStore } from '~/stores/generalStore';
 
-const props = defineProps({
-  show: Boolean,
-  type: String,
-})
+const general_store = useGeneralStore()
+const type = ref(general_store.toast.type)
 
 const toast_color = {
   'error': '#CC3636',
@@ -14,42 +40,19 @@ const toast_color = {
 }
 
 const progress_color = {
-  'error': '#DDF7E3',
-  'success': '#DDF7E3',
-  'warning': '#DDF7E3',
+  'warning': 'hsl(134, 62%, 92%, 0.7)',
+  'error': 'hsl(134, 62%, 92%, 0.7)',
+  'success': 'hsl(134, 62%, 92%, 0.7)',
 }
 
 const toast_icon_src = ref({
-  'error': '../src/assets/images/circle-xmark-regular.svg',
-  'success': '../src/assets/images/circle-check-regular.svg',
-  'warning': '../src/assets/images/circle-check-regular.svg',
+  'error': "material-symbols:error-outline-rounded",
+  'success': "material-symbols:check-circle-outline-rounded",
+  'warning': "material-symbols:check-circle-outline-rounded",
 })
 
 </script>
 
-<template>
-  <Transition name="slide-fade">
-      <div class="toast-wrapper" v-if="show">
-        <div  class="content-wrapper">
-          <img :src="toast_icon_src[type]" />
-          <div class="text-container">
-            <h3>
-              <slot name="title">
-                Sucess
-              </slot>
-            </h3>
-           
-            <p>
-              <slot name="content">
-                Run successfully failed.
-              </slot>
-            </p>
-          </div>
-        </div>
-        <div class="progress-bar active"></div>
-      </div>
-  </Transition>
-</template>
 
 <style scoped>
 
@@ -72,10 +75,8 @@ const toast_icon_src = ref({
   position: absolute;
   top: 2em;
   right: 2em;
-  background-color: v-bind(toast_color[type]);
+  background-color: v-bind( toast_color[ general_store.toast.type ] );
   border-radius: 0.5em;
-  /* box-shadow: 0px 0.3em rgba(0, 0, 0, 1);
-  border: 0.3em solid rgba(0, 0, 0, 1); */
   overflow: hidden;
   z-index: 999;
   cursor: pointer;
@@ -85,7 +86,6 @@ const toast_icon_src = ref({
   padding: 1em 1.5em;
   display: flex;
   gap: 1em;
-
 }
 
 img {

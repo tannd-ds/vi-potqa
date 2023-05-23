@@ -1,11 +1,7 @@
 :root {
   --primary-accent-color: #F1F5FF;
-  --secondary-accent-color: #AFD3E2;
-
   --black: #060627;
-  --black-1: #146C94;
-
-  --base-border-radius: 0.5em;
+  --base-border-radius: 0.25em;
 
   overflow: hidden;
 }
@@ -59,6 +55,7 @@
   height: 3em;
   background-color: #00FFCA;
   border-radius: var(--base-border-radius);
+  color: var(--black);
   border: transparent;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -78,49 +75,7 @@
   display: flex;
   flex-direction: column;
   gap: 1em;
-  justify-content: center;
-}
-
-.p-name-bar {
-  display: flex;
-  justify-content:space-between;
-  align-items: center;
-}
-
-.p-name-bar h4 {
-  font-weight: 700;
-  font-size: 1.2em;
-  color: var(--primary-accent-color)
-}
-
-.p-list {
-  max-height: 92vh;
-}
-
-.p-name-bar-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.p-name-bar-btn button {
-  width: 2rem;
-  border: none;
-  background-color: transparent;
-  /* color:rgba(255, 255, 255, 0.7); */
-  align-items: center;
-}
-
-.p-name-bar-btn button img {
-  width: 50%;
-  opacity: 20%;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.p-name-bar-btn button img:hover {
-  opacity: 100%;
-  transition: all 0.3s ease;
+  justify-content: space-between;
 }
 
 .p-confirmed {
@@ -138,21 +93,18 @@
 
 .s-confirmed {
   width: 100%;
-  transition: all 0.1s ease;
   padding: 0.15em 0em 0.15em 0em;
   color: var(--primary-accent-color);
 }
 
 .s-confirmed:hover {
   color: hsl(168, 100%, 90%);
-  transition: all 0.1s ease;
 }
 
 .s-confirmed:has(input:checked) {
   color: #00FFCA;
   box-shadow: 0px 0em rgba(0, 0, 0, 1);
   transform: translate(0em, 0.3em);
-  transition: all 0.2s ease;
 }
 
 .s-confirmed label {
@@ -181,4 +133,28 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+.glass-bg {
+  padding: 1.5em 1em;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: transparent;
+  border-radius: var(--base-border-radius);
+  color: var(--primary-accent-color);
+  line-height: 1.5em;
+}
+
+.icon-btn {
+  width: 2rem;
+  border: none;
+  background-color: transparent;
+  align-items: center;
+  opacity: 20%;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.icon-btn:hover {
+  opacity: 100%;
+  transition: all 0.3s ease;
 }

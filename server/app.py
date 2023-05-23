@@ -12,8 +12,7 @@ def save_to_db(data):
     global df
     data_point = pd.DataFrame(data)
     df = pd.concat([df, data_point], axis=0)
-    print(df )
-
+    print(df)
 
 @app.route("/")
 def hello_world():
@@ -22,8 +21,9 @@ def hello_world():
 @app.route('/json', methods=['GET', 'POST'])
 def json():
     if request.method == 'GET':
+        print(df)
         return {'status': 'sucess',
-                'data': df.to_json()}
+                'data': df.T.to_json()}
     else:
         try:
             data = request.get_json()
@@ -31,6 +31,12 @@ def json():
             return {'status': 'success'}
         except Exception as e:
             return {'status': 'error', 'message': str(e)}
+
+@app.after_request
+def add_access_headers(resp):
+    resp.headers['Access-Control-Allow-Credentials']='true'
+    return resp
+
 
 if __name__ == '__main__':
     app.run(host='localhost', port=8989, debug=True)

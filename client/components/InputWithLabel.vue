@@ -13,6 +13,7 @@
             :id="id" 
             :placeholder="placeholder" 
             :rows="type == `textarea` ? 10 : 1"
+            class="glass-bg"
             spellcheck="false" 
             autocomplete="off" 
             aria-autocomplete="none"
@@ -39,17 +40,12 @@
     gap: 0.5em;
 }
 
-.container input, textarea {
-    padding: 1.5em 1em;
-    background-color: rgba(255, 255, 255, 0.1);
-    border: transparent;
-    border-radius: var(--base-border-radius);
-    color: var(--primary-accent-color);
-    line-height: 1.5em;
-}
-
 .container input {
     height: 2vh;
+}
+
+.container input, textarea {
+    font-size: 1.1em;
 }
 
 .container input:focus, textarea:focus {
