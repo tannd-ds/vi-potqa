@@ -8,7 +8,7 @@
                 :context_name="p.name"
                 :context_index="p_index"
             >
-                <span class="s-confirmed" v-for="(s, s_index) in p.content">
+                <span class="sentence" v-for="(s, s_index) in p.content">
                   <span class="word s-index">
                     <label :for="`${p_index}-${s_index}`" class="disable-select">[{{ s_index }}]</label>
                   </span>
@@ -64,6 +64,37 @@ function sentence_to_word(sentence) {
 
 ul li {
   list-style-type: none;
+}
+
+.sentence {
+  width: 100%;
+  padding: 0.15em 0em 0.15em 0em;
+  color: var(--white);
+}
+
+.sentence:hover {
+  color: hsl(168, 100%, 90%);
+}
+
+.sentence:has(input:checked) {
+  color: var(--accent-color);
+  box-shadow: 0px 0em rgba(0, 0, 0, 1);
+  transform: translate(0em, 0.3em);
+}
+
+.sentence label {
+  padding: 0.15em 0.3em 0em 0.15em;
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+
+.s-index {
+  color: #FCE22A;
+}
+
+.word {
+  display: inline-block;
+  cursor: pointer;
 }
 
 

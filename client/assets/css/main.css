@@ -1,6 +1,7 @@
 :root {
-  --primary-accent-color: #F1F5FF;
-  --black: #060627;
+  --white: #F1F5FF;
+  --black: #020218;
+  --accent-color: hsl(168, 100%, 50%);
   --base-border-radius: 0.25em;
 
   overflow: hidden;
@@ -21,14 +22,15 @@
   overflow-y: auto;
 }
 
-.left-panel {
+.panel {
   margin: 0 2vw;
-  width: 40%;
+  width: 45%;
+  max-height: 92vh;
   display: flex;
   flex-direction: column;
   gap: min(1em, 15px);
-  justify-content: center;
-  color: var(--primary-accent-color);
+  justify-content: space-between;
+  color: var(--white);
 }
 
 .web-title-container {
@@ -49,81 +51,6 @@
   font-weight: 900;
 }
 
-
-.btn {
-  width: 20%;
-  height: 3em;
-  background-color: #00FFCA;
-  border-radius: var(--base-border-radius);
-  color: var(--black);
-  border: transparent;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-.btn:active {
-  background-color: hsl(168, 60%, 50%);
-  transform: translateY(0.2em);
-  transition: all 0.05s ease;
-}
-
-/* ----- Right Panel Side ----- */
-
-.right-panel {
-  margin: 2vw;
-  width: 45%;
-  max-height: 92vh;
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-  justify-content: space-between;
-}
-
-.p-confirmed {
-  margin-top: 2em;
-  margin-right: 1.5em;
-  margin: 2em 1.5em 0 1em;
-  padding: 1em 1em 2em 1em;
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-  border-radius: var(--base-border-radius);
-  line-height: 1.5em;
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.s-confirmed {
-  width: 100%;
-  padding: 0.15em 0em 0.15em 0em;
-  color: var(--primary-accent-color);
-}
-
-.s-confirmed:hover {
-  color: hsl(168, 100%, 90%);
-}
-
-.s-confirmed:has(input:checked) {
-  color: #00FFCA;
-  box-shadow: 0px 0em rgba(0, 0, 0, 1);
-  transform: translate(0em, 0.3em);
-}
-
-.s-confirmed label {
-  padding: 0.15em 0.3em 0em 0.15em;
-  cursor: pointer;
-  transition: all 0.1s ease;
-}
-
-.s-index {
-  color: #FCE22A;
-}
-
-.word {
-  display: inline-block;
-  cursor: pointer;
-}
-
-/* ----- General ----- */
-
 .scrollable {
    overflow-y: auto;
 }
@@ -140,7 +67,7 @@
   background-color: rgba(255, 255, 255, 0.1);
   border: transparent;
   border-radius: var(--base-border-radius);
-  color: var(--primary-accent-color);
+  color: var(--white);
   line-height: 1.5em;
 }
 
@@ -157,4 +84,20 @@
 .icon-btn:hover {
   opacity: 100%;
   transition: all 0.3s ease;
+}
+
+.btn {
+  width: 20%;
+  height: 3em;
+  background-color: var(--accent-color);
+  border-radius: var(--base-border-radius);
+  color: var(--black);
+  border: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn:active {
+  background-color: hsl(168, 60%, 50%);
+  transform: translateY(0.2em);
+  transition: all 0.05s ease;
 }

@@ -34,6 +34,8 @@ export const useAnnotationInputStore = defineStore('annotation_input', {
                 content: sentences
                 }
                 this.contexts.push(new_context)
+                this.new_p_name = ""
+                this.new_p_content = ""
             }
             else {
                 general_store.show_toast('error', 'Fail', 'Paragraph\'s content is empty!')

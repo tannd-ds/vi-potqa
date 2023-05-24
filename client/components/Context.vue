@@ -43,7 +43,7 @@
 .context-name-bar h4 {
   font-weight: 700;
   font-size: 1.2em;
-  color: var(--primary-accent-color)
+  color: var(--white)
 }
 
 .context-name-bar-btn {

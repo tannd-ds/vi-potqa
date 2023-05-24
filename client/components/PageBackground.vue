@@ -26,7 +26,7 @@
 .bg-gradient.grad-1 {
   width: 100%;
   height: auto;
-  top: -120vh;
+  top: -70vw;
   left: -40vw;
 }
 
