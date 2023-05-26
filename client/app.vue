@@ -2,7 +2,6 @@
   <Html>
     <Head>
       <Title>ViPQA</Title>
-
     </Head>
   </Html>
   <Teleport to="body"> <Toast /> </Teleport>
@@ -11,9 +10,7 @@
     <div class="wrapper">
       <div class="panel scrollable">
         <div class="web-title-container">
-          <div class="text-title">
-            <h1 class="app-name disable-select">ViPQA</h1>
-          </div>
+          <h1 class="app-name disable-select">ViPQA</h1>
         </div>
         <InputWithLabel 
           :type="`input`"

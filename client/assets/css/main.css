@@ -35,7 +35,7 @@
 }
 
 .web-title-container {
-  margin-bottom: 1em;
+  margin-bottom: 3em;
   display: flex;
   flex-direction: row;
   gap: min(1em, 15px);
@@ -43,13 +43,11 @@
   justify-content: center;
 }
 
-.web-title-container .app-logo {
-  width: 5vw;
-}
-
-.web-title-container .text-title .app-name {
-  font-size: max(3vw, 6vh);
-  font-weight: 900;
+.web-title-container .app-name {
+  font-size: max(2vw, 3vh);
+  font-weight: 300;
+  letter-spacing: 1em;
+  color: white;
 }
 
 .scrollable {
