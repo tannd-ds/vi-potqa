@@ -45,7 +45,7 @@
 }
 
 .container input, textarea {
-    font-size: 1.1em;
+    font-size: 1em;
 }
 
 .container input:focus, textarea:focus {

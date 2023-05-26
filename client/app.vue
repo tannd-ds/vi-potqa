@@ -1,18 +1,18 @@
 <template>
   <Html>
     <Head>
-      <Title>Vi-PotQA</Title>
+      <Title>ViPQA</Title>
 
     </Head>
   </Html>
   <Teleport to="body"> <Toast /> </Teleport>
-  <Teleport to="body"> <OverlayEditContext /> </Teleport>
+  <Teleport to="body"> <Overlay /> </Teleport>
   <PageBackground>
     <div class="wrapper">
       <div class="panel scrollable">
         <div class="web-title-container">
           <div class="text-title">
-            <h1 class="app-name disable-select">Vi-PotQA</h1>
+            <h1 class="app-name disable-select">ViPQA</h1>
           </div>
         </div>
         <InputWithLabel 
@@ -44,53 +44,23 @@
           :placeholder="`Input Answer`"
           v-model:model-value="current_input.answer_content"
         />
-        <button class="btn" @click="export_data">Confirm</button>
-        <button class="btn" @click="GET_data">GET</button>
+        <button class="btn" @click="current_input.save_confirmed">Confirm</button>
       </div>
 
       <div class="panel scrollable">
         <ContextList />
       </div>
+      <ConfirmedHandler />
     </div>
   </PageBackground>
 </template>
 
 <script setup>
-  import { ref } from 'vue'
   import { useAnnotationInputStore } from './stores/annotationInput';
   import { useGeneralStore } from './stores/generalStore'
 
   const current_input = useAnnotationInputStore()
   const general_store = useGeneralStore()
-
-  function export_data() {
-    let data = {}
-
-    if (current_input.contexts.length == 0) {
-      general_store.show_toast('error', 'Empty Contexts', 'Please add more Context Paragraph')
-      return 
-    }
-    if (current_input.get_contexts_names.length == 0) {
-      general_store.show_toast('error', 'Empty Facts', 'Please choose more facts')
-      return 
-    }
-    if (current_input.question_content == "") {
-      general_store.show_toast('error', 'Empty Question', 'Please add a Question')
-      return 
-    }
-    if (current_input.answer_content == "") {
-      general_store.show_toast('error', 'Empty Answer', 'Please add an Answer')
-      return 
-    }
-
-    data['contexts'] = current_input.get_simplified_contexts
-    data['facts'] = current_input.get_contexts_names
-    data['question'] = current_input.question_content
-    data['answer'] = current_input.answer_content
-
-    POST_data([data])
-    show_toast('success', 'Success', 'Save data successfully')
-  }
 
   const { $axios } = useNuxtApp()
   function POST_data(post_data) {

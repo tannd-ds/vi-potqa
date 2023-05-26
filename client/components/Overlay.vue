@@ -2,16 +2,23 @@
     <Transition name="fade">
         <div 
             class="bg" 
-            v-if="general_store.is_show_overlay"
+            v-if="general_store.overlay.is_show"
         >
-            <div class="glass-bg">
+            <div class="glass-bg scrollable" ref="modal">
                 <button  
                     class="icon-btn"
-                    @click="general_store.is_show_overlay=false"
+                    @click="general_store.overlay.is_show=false"
                 >
                     <Icon name="fa6-solid:xmark" color="white" size="1.5em"/>
                 </button>
-                <slot> Content </slot>
+                <slot>
+                    <div v-if="general_store.overlay.type == 'edit'"> 
+                        <OverlayEditContext />
+                    </div>
+                    <div v-else>
+                        <OverlayAllData />
+                    </div>
+                </slot>
 
             </div>
         </div>
@@ -20,12 +27,17 @@
 
 <script setup>
 
-import { useGeneralStore } from '~/stores/generalStore';
+import { useGeneralStore } from '~/stores/generalStore'
+import { onClickOutside } from '@vueuse/core'
+
 const general_store = useGeneralStore()
+const modal = ref(null)
+onClickOutside(modal, () => general_store.overlay.is_show = false)
 
 const props = defineProps({
     show: Boolean,
 })
+
 
 </script>
 
@@ -59,6 +71,7 @@ const props = defineProps({
     position: relative;
     width: 60vw;
     min-width: 40em;
+    max-height: 90vh;
     display: flex;
     flex-direction: column;
     gap: 1em;

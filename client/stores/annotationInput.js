@@ -4,6 +4,7 @@ import { useGeneralStore } from './generalStore'
 export const useAnnotationInputStore = defineStore('annotation_input', {
     state: () => {
         return { 
+            confirmed_data: [], 
             new_p_name: "",
             new_p_content: "",
             question_content: "",
@@ -17,13 +18,19 @@ export const useAnnotationInputStore = defineStore('annotation_input', {
             }
         }
     },
+    persist: true,
     actions: {
         reset() {
-            this.new_p_name= ""
-            this.new_p_content= ""
-            this.question_content= ""
-            this.answer_content= ""
-            this.checked_ids= []
+            this.new_p_name = ""
+            this.new_p_content = ""
+            this.question_content = ""
+            this.answer_content = ""
+        },
+        reset_contexts() {
+            if (confirm('Are you sure you want to reset all Contexts?')) {
+                this.contexts = []
+                this.checked_ids = []
+            }
         },
         add_context() {
             const general_store = useGeneralStore()
@@ -50,14 +57,46 @@ export const useAnnotationInputStore = defineStore('annotation_input', {
             this.edit_context.original_index = context_id
             this.edit_context.name = this.contexts[context_id]['name']
             this.edit_context.content = this.contexts[context_id]['content'].join(" ")
-            general_store.is_show_overlay = true
+            general_store.overlay.type = "edit"
+            general_store.overlay.is_show = true
         },
         save_edit_context() {
             const general_store = useGeneralStore()
             this.contexts[this.edit_context.original_index].name = this.edit_context.name
             this.contexts[this.edit_context.original_index].content = this.edit_context.content.split(/(?<=[.!?])\s+/)
-            general_store.is_show_overlay = false
+            general_store.overlay.is_show = false
             this.update_checked_id("edit", this.edit_context.original_index)
+        },
+        save_confirmed() {
+            const general_store = useGeneralStore()
+            let data = {}
+
+            if (this.contexts.length == 0) {
+            general_store.show_toast('error', 'Empty Contexts', 'Please add more Context Paragraph')
+            return 
+            }
+            if (this.get_contexts_names.length == 0) {
+            general_store.show_toast('error', 'Empty Facts', 'Please choose more facts')
+            return 
+            }
+            if (this.question_content == "") {
+            general_store.show_toast('error', 'Empty Question', 'Please add a Question')
+            return 
+            }
+            if (this.answer_content == "") {
+            general_store.show_toast('error', 'Empty Answer', 'Please add an Answer')
+            return 
+            }
+
+            data['contexts'] = this.get_simplified_contexts
+            data['facts'] = this.get_contexts_names
+            data['question'] = this.question_content
+            data['answer'] = this.answer_content
+
+            general_store.show_toast('success', 'Success', 'Save data successfully')
+            this.confirmed_data.push(data)
+            this.reset()
+            return [data]
         },
         update_checked_id(type="remove", context_id) {
             let result = []
@@ -96,6 +135,31 @@ export const useAnnotationInputStore = defineStore('annotation_input', {
                 prompt("update_checked_id has weird type")
             }
             this.checked_ids = result
+        },
+        remove_last_confirmed() {
+            if (this.confirmed_data.length == 0) {
+                useGeneralStore().show_toast("warning", "Nothing here", "There is no confirmed data to be removed")
+                return
+            }
+            if (confirm("Are you sure you want to remove last confirmed?"))
+                this.confirmed_data.pop()
+        },
+        download_confirmed() {
+            if (this.confirmed_data.length == 0) {
+                useGeneralStore().show_toast("warning", "Nothing here", "There is no confirmed data to be downloaded")
+                return
+            }
+            const jsonString = JSON.stringify(this.confirmed_data);
+            const blob = new Blob([jsonString], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = "data.json";
+            link.click();
+
+            URL.revokeObjectURL(url);
+            general_store.show_toast("success", "Success", "Successfully Download data.json");
         }
     },
     getters: {

@@ -48,7 +48,7 @@ const progress_color = {
 const toast_icon_src = ref({
   'error': "material-symbols:error-outline-rounded",
   'success': "material-symbols:check-circle-outline-rounded",
-  'warning': "material-symbols:check-circle-outline-rounded",
+  'warning': "heroicons:exclaimation-triangle",
 })
 
 </script>
@@ -57,7 +57,7 @@ const toast_icon_src = ref({
 <style scoped>
 
 .slide-fade-enter-active {
-  transform: translateX(0%);
+  transform: translateY(0%);
   transition: all 0.3s ease-out;
 }
 
@@ -67,13 +67,13 @@ const toast_icon_src = ref({
 
 .slide-fade-enter-from,
 .slide-fade-leave-to {
-  transform: translateX(100%);
+  transform: translateY(100%);
   opacity: 0;
 }
 
 .toast-wrapper {
   position: absolute;
-  top: 2em;
+  bottom: 2em;
   right: 2em;
   background-color: v-bind( toast_color[ general_store.toast.type ] );
   border-radius: 0.5em;

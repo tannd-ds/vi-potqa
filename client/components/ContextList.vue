@@ -1,4 +1,10 @@
 <template>
+    <button class="btn red" 
+      v-if="current_input.contexts.length > 0"
+      @click="current_input.reset_contexts"
+    >
+      Remove All
+    </button>
     <transition-group tag="ul" name="list">
         <li 
             v-for="(p, p_index) in current_input.contexts" 
@@ -97,5 +103,11 @@ ul li {
   cursor: pointer;
 }
 
+.btn {
+  width: 10em;
+}
+.red {
+  background-color: var(--accent-color-reverse);
+}
 
 </style>

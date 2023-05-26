@@ -2,8 +2,9 @@
   --white: #F1F5FF;
   --black: #020218;
   --accent-color: hsl(168, 100%, 50%);
+  --accent-color-reverse: hsl(340, 84%, 50%);
   --base-border-radius: 0.25em;
-
+  
   overflow: hidden;
 }
 
@@ -87,14 +88,16 @@
 }
 
 .btn {
-  width: 20%;
+  width: 10em; 
   height: 3em;
+  min-height: 40px;
   background-color: var(--accent-color);
   border-radius: var(--base-border-radius);
   color: var(--black);
   border: transparent;
   cursor: pointer;
   transition: all 0.3s ease;
+  font-weight: 700;
 }
 .btn:active {
   background-color: hsl(168, 60%, 50%);
