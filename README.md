@@ -17,7 +17,7 @@ This is a Tool for Our Group's Capstone Project, which provides a UI for interac
 
 1. Download and Install [Nodejs](https://nodejs.org/en/download)
 2. Download and Install [Git](https://git-scm.com/downloads)
-3. Open CommandLine on Direction of your choice and run these commands
+3. Open CommandLine on Directory of your choice and run these commands
 ```
 git clone https://github.com/tannd-ds/vi-potqa.git
 cd vi-potqa
