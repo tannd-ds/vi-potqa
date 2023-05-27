@@ -42,16 +42,22 @@ function show_all_data() {
 </script>
 
 <style scoped>
-
 .container {
-    height: 90vh;
-    margin-right: 2em;
+    height: 100vh;
+    padding: 1.5em 0.8em;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     gap: 1em;
+    background-color: #ffffff15;
     color: var(--accent-color);
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .btn-with-text {
@@ -62,12 +68,16 @@ function show_all_data() {
     gap: 0.5em;
 }
 
+.btn-with-text:hover .number, .icon-btn {
+    filter: drop-shadow(0em 0em 0.5em);
+}
+
 .text {
     display: none;
 }
 
 .btn-with-text:hover .text {
-    right: 5em;
+    right: 4em;
     position: absolute;
     display: flex;
     cursor: pointer;

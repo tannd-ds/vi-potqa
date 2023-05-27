@@ -13,6 +13,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Montserrat', sans-serif;
+  letter-spacing: 0.025em;
 }
 
 .wrapper {
@@ -41,6 +42,7 @@
   gap: min(1em, 15px);
   align-items: center;
   justify-content: center;
+  transition: all ease 0.2s;
 }
 
 .web-title-container .app-name {
@@ -48,6 +50,7 @@
   font-weight: 300;
   letter-spacing: 1em;
   color: white;
+  animation: fade-in-up 1s;
 }
 
 .scrollable {
@@ -81,6 +84,7 @@
 }
 
 .icon-btn:hover {
+  color: var(--accent-color);
   opacity: 100%;
   transition: all 0.3s ease;
 }
@@ -101,4 +105,17 @@
   background-color: hsl(168, 60%, 50%);
   transform: translateY(0.2em);
   transition: all 0.05s ease;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(2em);
+    letter-spacing: 0.8em;
+  }
+  
+  to {
+    opacity: 1;
+    letter-spacing: 1em;
+  }
 }

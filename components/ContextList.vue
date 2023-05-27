@@ -1,14 +1,18 @@
 <template>
-    <button class="btn red" 
-      v-if="current_input.contexts.length > 0"
-      @click="current_input.reset_contexts"
-    >
-      Remove All
-    </button>
-    <transition-group tag="ul" name="list">
+      <transition-group tag="ul" name="list">
+        <li class="btn-container">
+          <div class="btn-title disable-select">Remove All Contexts below</div>
+          <button class="btn icon-btn red" 
+            v-if="current_input.contexts.length > 0"
+            @click="current_input.reset_contexts"
+          >
+            <Icon name="mi:delete" size="1.5em"/>
+          </button>
+        </li>
         <li 
             v-for="(p, p_index) in current_input.contexts" 
             :key="p.name"
+            class="context"
         >
             <Context
                 :context_name="p.name"
@@ -32,7 +36,7 @@
                 </span>
             </Context>
         </li>
-    </transition-group>
+      </transition-group>
 </template>
 
 <script setup>
@@ -68,7 +72,14 @@ function sentence_to_word(sentence) {
   transform: translateX(-50px);
 }
 
-ul li {
+.list {
+  /* width: 50%; */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.context {
   list-style-type: none;
 }
 
@@ -103,11 +114,29 @@ ul li {
   cursor: pointer;
 }
 
-.btn {
-  width: 10em;
+.btn-container {
+  margin-bottom: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1em;
 }
+
+.btn-title {
+  color: var(--accent-color-reverse);
+  opacity: 0;
+  transition: all 0.25s ease;
+}
+
+.btn-container:has(.red:hover) .btn-title {
+  opacity: 1;
+}
+
 .red {
+  width: 3em;
+  color: var(--black);
   background-color: var(--accent-color-reverse);
+  opacity: 1;
 }
 
 </style>

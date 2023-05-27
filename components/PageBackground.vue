@@ -21,6 +21,7 @@
   position: absolute;
   z-index: -1;
   pointer-events: none;
+  animation: fade-in 5s;
 }
 
 .bg-gradient.grad-1 {
@@ -34,5 +35,14 @@
   width: 90%;
   bottom: -80vh;
   right: -45vw;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>
