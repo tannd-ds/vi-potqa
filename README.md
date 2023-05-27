@@ -13,13 +13,31 @@ This is a Tool for Our Group's Capstone Project, which provides a UI for interac
 
 **Notes:** *This Tool is under-developed, there are many features that need to be improved and implemented.*
 
+## 🤖 Installation
+
+1. Download and Install [Nodejs](https://nodejs.org/en/download)
+2. Download and Install [Git](https://git-scm.com/downloads)
+3. Open CommandLine on Direction of your choice and run these commands
+```
+git clone https://github.com/tannd-ds/vi-potqa.git
+cd vi-potqa
+npm install
+```
+4. Run the tool 
+```
+npm run dev
+```
+5. That's it! You can start using the tool in your browser on [http://localhost:3000/](http://localhost:3000/)
+
+*NOTE: The localhost may be changed if the port 3000 is occupied.*
+
 ## 📖 Guideline for Annotation
 
 Please see [here]() for full Guideline on the process of Annotating our Dataset.
 
 ## ✨ Screenshots
 
-![image](https://github.com/tannd-ds/vi-pot-qa-annotator/assets/64354200/91d308ac-b318-4afd-9466-d3c39919a3f0)
+![image](https://github.com/tannd-ds/vi-potqa/assets/64354200/ef6bf2f8-c3bb-4e45-9a59-a747a8cb5125)
 
 ## 🙋‍♂️ About Us
 
