@@ -26,7 +26,12 @@
           :placeholder="`Input Paragraph Content`"
           v-model:model-value="current_input.new_p_content"
         />
-        <button class="btn add-btn" @click="current_input.add_context">Add</button>
+        <div style="display:flex; gap: 1em;">
+          <button class="btn add-btn" @click="current_input.add_context">Add</button>
+          <button class="btn add-btn" @click="current_input.parse_data_from_content" title="Parse JSON to confirmed data">
+            <Icon name="material-symbols:chevron-right-rounded" size="80%" />
+          </button>
+        </div>
         <InputWithLabel 
           :type="`input`"
           :id="`question-content`"
@@ -54,32 +59,5 @@
 
 <script setup>
   import { useAnnotationInputStore } from './stores/annotationInput';
-  import { useGeneralStore } from './stores/generalStore'
-
   const current_input = useAnnotationInputStore()
-  const general_store = useGeneralStore()
-
-  const { $axios } = useNuxtApp()
-  function POST_data(post_data) {
-    $axios.post($axios.defaults.baseURL, {
-      body: post_data
-    })
-    .then(response => {
-      console.log(response);
-    })
-    .catch(error => {
-      console.log(error);
-    });
-  }
-
-  function GET_data() {
-    $axios.get($axios.defaults.baseURL)
-      .then(response => {
-        console.log(JSON.parse(response.data['data']))
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }
-
 </script>

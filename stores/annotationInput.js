@@ -21,8 +21,6 @@ export const useAnnotationInputStore = defineStore('annotation_input', {
     persist: true,
     actions: {
         reset() {
-            this.new_p_name = ""
-            this.new_p_content = ""
             this.question_content = ""
             this.answer_content = ""
         },
@@ -136,13 +134,15 @@ export const useAnnotationInputStore = defineStore('annotation_input', {
             }
             this.checked_ids = result
         },
-        remove_last_confirmed() {
+        remove_confirmed(clicked_index) {
+            let index = clicked_index
+            useGeneralStore().overlay.is_show = false
             if (this.confirmed_data.length == 0) {
                 useGeneralStore().show_toast("warning", "Nothing here", "There is no confirmed data to be removed")
                 return
             }
-            if (confirm("Are you sure you want to remove last confirmed?"))
-                this.confirmed_data.pop()
+            if (confirm("Do you want to remove this?"))
+                this.confirmed_data.splice(index, 1)
         },
         download_confirmed() {
             if (this.confirmed_data.length == 0) {
@@ -159,7 +159,52 @@ export const useAnnotationInputStore = defineStore('annotation_input', {
             link.click();
 
             URL.revokeObjectURL(url);
-            general_store.show_toast("success", "Success", "Successfully Download data.json");
+            useGeneralStore().show_toast("success", "Success", "Successfully Download data.json");
+        },
+        parse_data_from_content() {
+            if (this.new_p_content == "") {
+                useGeneralStore().show_toast("warning", "Null Data", "Paragraph Content is null.");
+                return
+            }
+            if (this.confirmed_data.length) {
+                if (!confirm("Your Saved Data is not null, are you sure you want to overwrite it?")) 
+                    return
+            }
+            this.confirmed_data = JSON.parse(this.new_p_content)
+            this.new_p_content = ""
+            useGeneralStore().show_toast("success", "Success", "Successfully parsed Data");
+        },
+        load_data_from_confirmed_data(clicked_index) {
+            let index = clicked_index
+            useGeneralStore().overlay.is_show = false
+            this.contexts = this.get_desimplify_contexts(this.confirmed_data[index].contexts)
+            this.question_content = this.confirmed_data[index].question
+            this.answer_content = this.confirmed_data[index].answer
+            this.checked_ids = this.get_context_id(this.confirmed_data[index].facts, this.confirmed_data[index].contexts)
+            this.remove_confirmed(index)
+        },
+        get_desimplify_contexts(simplified_contexts) {
+            let original_contexts = []
+            for (let i = 0; i < simplified_contexts.length; i++)
+                original_contexts.push({
+                    'name': simplified_contexts[i][0],
+                    'content': simplified_contexts[i][1]
+                })
+            return original_contexts
+        },
+        get_context_id(facts, contexts) {
+            let result = [];
+            for (let i = 0; i < facts.length; i++) {
+                let context_id = this.get_context_index(facts[i][0], contexts)
+                let sentence_id = facts[i][1]
+                let checked_id = String(context_id) + '-' + String(sentence_id)
+                result.push(checked_id)
+            }
+            return result
+        },
+        get_context_index(name, contexts) {
+            for (let i = 0; (i < contexts.length) && (contexts[i][0] != name); i++)
+            return i
         }
     },
     getters: {

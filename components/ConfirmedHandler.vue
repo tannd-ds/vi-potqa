@@ -13,12 +13,6 @@
                     <Icon name="material-symbols:download-rounded" size="100%" color="var(--accent-color)"/>
                 </button>
             </div>
-            <div class="btn-with-text">
-                <div class="text">Remove Last Data</div>
-                <button class="icon-btn" @click="current_input.remove_last_confirmed">
-                    <Icon name="material-symbols:backspace-outline-rounded" size="100%" color="var(--accent-color)"/>
-                </button>
-            </div>
         </div>
 </template>
 
