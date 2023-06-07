@@ -75,7 +75,7 @@ const props = defineProps({
     display: flex;
     flex-direction: column;
     gap: 1em;
-    background-color: var(--black);
+    background-color: hsl(var(--black-base-hsl-triplet));
 }
 
 button {

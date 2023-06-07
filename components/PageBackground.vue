@@ -13,7 +13,7 @@
 <style scoped>
 .bg {
   width: 100%;
-  background-color: var(--black);
+  background-color: hsl(var(--black-base-hsl-triplet));
   position: absolute;
   z-index: -2;
 }
