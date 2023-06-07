@@ -203,8 +203,10 @@ export const useAnnotationInputStore = defineStore('annotation_input', {
             return result
         },
         get_context_index(name, contexts) {
-            for (let i = 0; (i < contexts.length) && (contexts[i][0] != name); i++)
-            return i
+            for (let i = 0; i < contexts.length; i++)
+                if (contexts[i][0] == name)
+                    return i
+            return -1 
         }
     },
     getters: {
