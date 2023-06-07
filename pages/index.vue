@@ -23,15 +23,10 @@
           :type="`textarea`"
           :id="`context-input`"
           :label_name="`Paragraph Content`"
-          :placeholder="`Input Paragraph Content`"
+          :placeholder="`Input Paragraph Content (You can add JSON String to parse the Confirmed Data)`"
           v-model:model-value="current_input.new_p_content"
         />
-        <div style="display:flex; gap: 1em;">
-          <button class="btn add-btn" @click="current_input.add_context">Add</button>
-          <button class="btn add-btn" @click="current_input.parse_data_from_content" title="Parse JSON to confirmed data">
-            <Icon name="material-symbols:chevron-right-rounded" size="80%" />
-          </button>
-        </div>
+        <button class="btn add-btn" @click="current_input.add_context">Add</button>
         <InputWithLabel 
           :type="`input`"
           :id="`question-content`"

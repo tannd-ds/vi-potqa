@@ -31,20 +31,43 @@ export const useAnnotationInputStore = defineStore('annotation_input', {
             }
         },
         add_context() {
-            const general_store = useGeneralStore()
-            if (this.is_valid_context) {
+            
+            // Check if input is JSON string
+            let confirmed_JSON = null
+            try {
+                confirmed_JSON = JSON.parse(this.new_p_content)
+            } catch(SyntaxError) { }
+
+            if (confirmed_JSON) {
+                this.parse_data_from_content(confirmed_JSON)
+                return
+            }
+
+            // If input is not JSON string
+            this.new_p_content = this.get_tidy_content
+            if (this.new_p_content) {
                 let sentences = this.get_sentences
                 let new_context = {
-                name: (this.new_p_name) ? this.new_p_name : this.get_unique_context_name,
-                content: sentences
+                    name: (this.new_p_name) ? this.new_p_name : this.get_unique_context_name,
+                    content: sentences
                 }
                 this.contexts.push(new_context)
                 this.new_p_name = ""
                 this.new_p_content = ""
+                return
             }
-            else {
-                general_store.show_toast('error', 'Fail', 'Paragraph\'s content is empty!')
+            useGeneralStore().show_toast('error', 'Fail', 'Paragraph\'s content is empty!')
+        },
+        parse_data_from_content(JSON_obj) {
+            if (!JSON_obj) return
+
+            if (this.confirmed_data.length) {
+                if (!confirm("Your Saved Data is not null, are you sure you want to overwrite it?")) 
+                    return
             }
+            this.confirmed_data = JSON_obj
+            this.new_p_content = ""
+            useGeneralStore().show_toast("success", "Success", "Successfully parsed Data");
         },
         remove_context(context_id) {
             this.contexts = this.contexts.slice(0, context_id).concat(this.contexts.slice(context_id+1))
@@ -70,20 +93,20 @@ export const useAnnotationInputStore = defineStore('annotation_input', {
             let data = {}
 
             if (this.contexts.length == 0) {
-            general_store.show_toast('error', 'Empty Contexts', 'Please add more Context Paragraph')
-            return 
+                general_store.show_toast('error', 'Empty Contexts', 'Please add more Context Paragraph')
+                return 
             }
             if (this.get_contexts_names.length == 0) {
-            general_store.show_toast('error', 'Empty Facts', 'Please choose more facts')
-            return 
+                general_store.show_toast('error', 'Empty Facts', 'Please choose more facts')
+                return 
             }
             if (this.question_content == "") {
-            general_store.show_toast('error', 'Empty Question', 'Please add a Question')
-            return 
+                general_store.show_toast('error', 'Empty Question', 'Please add a Question')
+                return 
             }
             if (this.answer_content == "") {
-            general_store.show_toast('error', 'Empty Answer', 'Please add an Answer')
-            return 
+                general_store.show_toast('error', 'Empty Answer', 'Please add an Answer')
+                return 
             }
 
             data['contexts'] = this.get_simplified_contexts
@@ -161,19 +184,6 @@ export const useAnnotationInputStore = defineStore('annotation_input', {
             URL.revokeObjectURL(url);
             useGeneralStore().show_toast("success", "Success", "Successfully Download data.json");
         },
-        parse_data_from_content() {
-            if (this.new_p_content == "") {
-                useGeneralStore().show_toast("warning", "Null Data", "Paragraph Content is null.");
-                return
-            }
-            if (this.confirmed_data.length) {
-                if (!confirm("Your Saved Data is not null, are you sure you want to overwrite it?")) 
-                    return
-            }
-            this.confirmed_data = JSON.parse(this.new_p_content)
-            this.new_p_content = ""
-            useGeneralStore().show_toast("success", "Success", "Successfully parsed Data");
-        },
         load_data_from_confirmed_data(clicked_index) {
             let index = clicked_index
             useGeneralStore().overlay.is_show = false
@@ -210,11 +220,13 @@ export const useAnnotationInputStore = defineStore('annotation_input', {
         }
     },
     getters: {
-        is_valid_context() {
-            return this.new_p_content.trim()
-        },
         get_sentences() {
             return this.new_p_content.split(/(?<=[.!?])\s+/)
+        },
+        get_tidy_content() {
+            let processed_content = this.new_p_content.trim()
+            processed_content = processed_content.replace(/\[[0-9]+\]/g, '')
+            return processed_content
         },
         get_contexts_names() {
             let ids = this.checked_ids
