@@ -47,13 +47,9 @@
           v-model:model-value="current_input.answer_content"
         />
         <button class="btn" @click="current_input.save_confirmed">Confirm</button>
-        <button class="btn" @click="fetchDataToFlask">fetch</button>
       </div>
 
       <div class="panel scrollable">
-        <div>
-          {{ test }}
-        </div>
         <ContextList />
       </div>
       <ConfirmedHandler />
