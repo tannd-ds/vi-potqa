@@ -1,17 +1,29 @@
 <template>
         <div class="container">
             <!-- <div class="btn-with-text" title="Add more data!"> Number of Data: {{ current_input.confirmed_data.length }}</div> -->
-            <div class="btn-with-text">
-                <div class="text">Show Data</div>
-                <div class="number" @click="show_all_data">
-                    {{ current_input.confirmed_data.length }}
+            <div class="part">
+                <div class="btn-with-text">
+                    <div class="text">Show Data</div>
+                    <div class="number" @click="show_all_data">
+                        {{ current_input.confirmed_data.length }}
+                    </div>
+                </div>
+                <div class="btn-with-text">
+                    <div class="text">Download Data</div>
+                    <button class="icon-btn" @click="current_input.download_confirmed">
+                        <Icon name="material-symbols:download-rounded" size="100%" color="hsl(var(--accent-base-hsl-triplet))"/>
+                    </button>
                 </div>
             </div>
-            <div class="btn-with-text">
-                <div class="text">Download Data</div>
-                <button class="icon-btn" @click="current_input.download_confirmed">
-                    <Icon name="material-symbols:download-rounded" size="100%" color="hsl(var(--accent-base-hsl-triplet))"/>
-                </button>
+            <div class="part">
+                <div class="separator"></div>
+                <div class="btn-with-text">
+                    <div class="text">Sign Out</div>
+                    <button class="icon-btn" @click="client.auth.signOut()">
+                        <Icon name="material-symbols:logout-rounded" size="100%" color="hsl(var(--accent-base-hsl-triplet))"/>
+                    </button>
+                </div>
+
             </div>
         </div>
 </template>
@@ -22,14 +34,14 @@ import { useAnnotationInputStore } from '~/stores/annotationInput';
 import { useGeneralStore } from '~/stores/generalStore';
 
 const current_input = useAnnotationInputStore()
-const general_store = useGeneralStore()
+const client = useSupabaseClient()
 
 function show_all_data() {
     if (current_input.confirmed_data.length < 1) {
         useGeneralStore().show_toast("warning", "Nothing here", "There is no confirmed data to be showed")
         return
     }
-    general_store.show_overlay('all')
+    useGeneralStore().show_overlay('all')
 }
 
 
@@ -37,15 +49,28 @@ function show_all_data() {
 
 <style scoped>
 .container {
+    padding: 2em 0.8em;
     height: 100vh;
-    padding: 1.5em 0.8em;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    gap: 1em;
+    justify-content: space-between;
     background-color: #ffffff15;
     color: hsl(var(--accent-base-hsl-triplet));
+}
+
+.part {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+}
+
+.separator {
+    margin-bottom: 1em;
+    height: 1px;
+    background-color: hsl(var(--accent-base-hsl-triplet), 0.3);
+    width: 100%;
 }
 
 ul {

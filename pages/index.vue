@@ -53,6 +53,19 @@
 </template>
 
 <script setup>
-  import { useAnnotationInputStore } from '../stores/annotationInput';
+  import { useAnnotationInputStore } from '../stores/annotationInput'
   const current_input = useAnnotationInputStore()
+  
+  const router = useRouter()
+  const user = useSupabaseUser()
+  const client = useSupabaseClient()
+  watchEffect(() => {
+    if (!user.value) {
+      router.push('/login')
+    }
+  })
+
+  // const { data: confirmed } = await client.from('confirmed').select('question, answer, contexts, facts').limit(3)
+  // current_input.confirmed_data = confirmed
+
 </script>
