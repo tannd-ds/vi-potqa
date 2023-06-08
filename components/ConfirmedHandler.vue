@@ -10,13 +10,7 @@
             <div class="btn-with-text">
                 <div class="text">Download Data</div>
                 <button class="icon-btn" @click="current_input.download_confirmed">
-                    <Icon name="material-symbols:download-rounded" size="100%" color="var(--accent-color)"/>
-                </button>
-            </div>
-            <div class="btn-with-text">
-                <div class="text">Remove Last Data</div>
-                <button class="icon-btn" @click="current_input.remove_last_confirmed">
-                    <Icon name="material-symbols:backspace-outline-rounded" size="100%" color="var(--accent-color)"/>
+                    <Icon name="material-symbols:download-rounded" size="100%" color="hsl(var(--accent-base-hsl-triplet))"/>
                 </button>
             </div>
         </div>
@@ -51,7 +45,7 @@ function show_all_data() {
     justify-content: flex-start;
     gap: 1em;
     background-color: #ffffff15;
-    color: var(--accent-color);
+    color: hsl(var(--accent-base-hsl-triplet));
 }
 
 ul {
@@ -82,7 +76,7 @@ ul {
     display: flex;
     cursor: pointer;
     padding: 0.5em 1em;
-    background-color: var(--black);
+    background-color: hsl(var(--black-base-hsl-triplet));
     border-radius: var(--base-border-radius);
 }
 

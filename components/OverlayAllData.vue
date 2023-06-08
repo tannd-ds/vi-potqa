@@ -1,6 +1,10 @@
 <template>
     <ul>
-        <li class="data-point-wrapper glass-bg" v-for="data_point in current_input.confirmed_data" :key="data_point">
+        <li class="data-point-wrapper glass-bg" 
+            v-for="(data_point, data_point_index) in current_input.confirmed_data" 
+            :key="data_point"
+            @click="current_input.load_data_from_confirmed_data(data_point_index)"
+        >
             <div class="field-wrapper">
                 <div class="title">Question</div>
                 <div id="question">

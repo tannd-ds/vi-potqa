@@ -1,10 +1,10 @@
 :root {
-  --white: #F1F5FF;
-  --black: #020218;
-  --accent-color: hsl(168, 100%, 50%);
-  --accent-color-reverse: hsl(340, 84%, 50%);
+  --accent-base-hsl-triplet: 168, 100%, 50%;
+  --accent-reverse-hsl-triplet: 340, 84%, 50%;
+  --white-base-hsl-triplet: 223, 100%, 97%;
+  --black-base-hsl-triplet: 240, 85%, 5%;
+
   --base-border-radius: 0.25em;
-  
   overflow: hidden;
 }
 
@@ -32,7 +32,7 @@
   flex-direction: column;
   gap: min(1em, 15px);
   justify-content: space-between;
-  color: var(--white);
+  color: hsl(var(--white-base-hsl-triplet));
 }
 
 .web-title-container {
@@ -69,7 +69,7 @@
   background-color: rgba(255, 255, 255, 0.1);
   border: transparent;
   border-radius: var(--base-border-radius);
-  color: var(--white);
+  color: hsl(var(--white-base-hsl-triplet));
   line-height: 1.5em;
 }
 
@@ -84,7 +84,7 @@
 }
 
 .icon-btn:hover {
-  color: var(--accent-color);
+  color: hsl(var(--accent-base-hsl-triplet));
   opacity: 100%;
   transition: all 0.3s ease;
 }
@@ -93,9 +93,9 @@
   width: 10em; 
   height: 3em;
   min-height: 40px;
-  background-color: var(--accent-color);
+  background-color: hsl(var(--accent-base-hsl-triplet));
   border-radius: var(--base-border-radius);
-  color: var(--black);
+  color: hsl(var(--black-base-hsl-triplet));
   border: transparent;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -105,6 +105,28 @@
   background-color: hsl(168, 60%, 50%);
   transform: translateY(0.2em);
   transition: all 0.05s ease;
+}
+
+::-webkit-scrollbar {
+  width: 0.5em;
+  height: 0.5em;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: hsl(var(--black-base-hsl-triplet, 0.1));
+  border-radius: 5em;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--white-base-hsl-triplet), 0.5);
+  border-radius: 5em;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 @keyframes fade-in-up {

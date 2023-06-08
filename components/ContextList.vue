@@ -72,10 +72,9 @@ function sentence_to_word(sentence) {
   transform: translateX(-50px);
 }
 
-.list {
-  /* width: 50%; */
+ul {
   list-style: none;
-  margin: 0;
+  margin: 0 1em;
   padding: 0;
 }
 
@@ -86,7 +85,7 @@ function sentence_to_word(sentence) {
 .sentence {
   width: 100%;
   padding: 0.15em 0em 0.15em 0em;
-  color: var(--white);
+  color: hsl(var(--white-base-hsl-triplet));
 }
 
 .sentence:hover {
@@ -94,7 +93,7 @@ function sentence_to_word(sentence) {
 }
 
 .sentence:has(input:checked) {
-  color: var(--accent-color);
+  color: hsl(var(--accent-base-hsl-triplet));
   box-shadow: 0px 0em rgba(0, 0, 0, 1);
   transform: translate(0em, 0.3em);
 }
@@ -123,7 +122,7 @@ function sentence_to_word(sentence) {
 }
 
 .btn-title {
-  color: var(--accent-color-reverse);
+  color: hsl(var(--accent-reverse-hsl-triplet));
   opacity: 0;
   transition: all 0.25s ease;
 }
@@ -134,8 +133,8 @@ function sentence_to_word(sentence) {
 
 .red {
   width: 3em;
-  color: var(--black);
-  background-color: var(--accent-color-reverse);
+  color: hsl(var(--black-base-hsl-triplet));
+  background-color: hsl(var(--accent-reverse-hsl-triplet));
   opacity: 1;
 }
 
