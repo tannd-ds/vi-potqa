@@ -65,7 +65,4 @@
     }
   })
 
-  // const { data: confirmed } = await client.from('confirmed').select('question, answer, contexts, facts').limit(3)
-  // current_input.confirmed_data = confirmed
-
 </script>

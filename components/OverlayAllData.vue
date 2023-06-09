@@ -30,7 +30,7 @@
                 </div>
             </div>
             <button class="show-full-btn" @click="toggle_show_full_this_index(data_point_index)">
-                <Icon :name="show_full_btn_icon_name[index_is_in_show_full(data_point_index)]" size="2em" color="hsl(var(--white-base-hsl-triplet))"/>
+                <Icon :name="show_full_btn_icon_name[index_is_in_show_full(data_point_index)]" size="2em" :color="COLOR_MODE_ICON_COLOR[$colorMode.value]"/>
             </button>
             <button class="invisible-btn" @click="current_input.load_data_from_confirmed_data(data_point_index)" ></button>
         </li>
@@ -42,6 +42,11 @@
 
 import { useAnnotationInputStore } from '~/stores/annotationInput'
 const current_input = useAnnotationInputStore()
+
+const COLOR_MODE_ICON_COLOR = {
+    'dark': "hsl(var(--white-base-hsl-triplet))",
+    'light': "hsl(var(--black-base-hsl-triplet), 0.3)",
+}
 
 const show_full = ref([])
 const show_full_btn_icon_name = [

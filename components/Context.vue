@@ -8,14 +8,14 @@
                   @click="current_input.show_edit_context(context_index)" 
                   title="Edit Paragraph"
                 >
-                  <Icon name="fa6-solid:pen" color="white" size="1em"/>
+                  <Icon name="material-symbols:edit" :color="COLOR_MODE_ICON_COLOR[$colorMode.value]" size="1.5em"/>
                 </button>
                 <button 
                   class="icon-btn" 
                   @click="current_input.remove_context(context_index)" 
                   title="Remove Paragraph"
                 >
-                  <Icon name="fa6-solid:xmark" color="white" size="1.4em"/>
+                  <Icon name="material-symbols:close-rounded" :color="COLOR_MODE_ICON_COLOR[$colorMode.value]" size="1.5em"/>
                 </button>
             </div>
         </div>
@@ -30,6 +30,11 @@
         context_name: String, 
         context_index: Number,
     })
+
+const COLOR_MODE_ICON_COLOR = {
+    'dark': "hsl(var(--white-base-hsl-triplet))",
+    'light': "hsl(var(--black-base-hsl-triplet), 0.3)",
+}
 </script>
 
 <style scoped>
@@ -43,6 +48,8 @@
 .context-name-bar h4 {
   font-weight: 700;
   font-size: 1.2em;
+}
+.dark-mode .context-name-bar h4 {
   color: hsl(var(--white-base-hsl-triplet))
 }
 
@@ -55,5 +62,4 @@
 .glass-bg {
   margin-bottom: 1em;
 }
-
 </style>

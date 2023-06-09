@@ -11,16 +11,31 @@
                 <div class="btn-with-text">
                     <div class="text">Download Data</div>
                     <button class="icon-btn" @click="current_input.download_confirmed">
-                        <Icon name="material-symbols:download-rounded" size="100%" color="hsl(var(--accent-base-hsl-triplet))"/>
+                        <Icon name="material-symbols:download-rounded" size="100%" :color="COLOR_MODE_ICON_COLOR[$colorMode.value]"/>
                     </button>
                 </div>
             </div>
             <div class="part">
                 <div class="separator"></div>
                 <div class="btn-with-text">
+
+                    <div class="text">
+                        Change Theme
+                    </div>
+                    <button class="icon-btn" 
+                        @click="() => {
+                            if ($colorMode.value == 'dark') 
+                                $colorMode.preference = 'light' 
+                            else 
+                                $colorMode.preference = 'dark'
+                        }">
+                        <Icon :name="COLOR_MODE_ICON[$colorMode.value]" size="100%" :color="COLOR_MODE_ICON_COLOR[$colorMode.value]"/>
+                    </button>
+                </div>
+                <div class="btn-with-text">
                     <div class="text">Sign Out</div>
                     <button class="icon-btn" @click="client.auth.signOut()">
-                        <Icon name="material-symbols:logout-rounded" size="100%" color="hsl(var(--accent-base-hsl-triplet))"/>
+                        <Icon name="material-symbols:logout-rounded" size="100%" :color="COLOR_MODE_ICON_COLOR[$colorMode.value]"/>
                     </button>
                 </div>
 
@@ -44,6 +59,14 @@ function show_all_data() {
     useGeneralStore().show_overlay('all')
 }
 
+const COLOR_MODE_ICON = {
+    'dark': 'material-symbols:dark-mode-rounded',
+    'light': 'material-symbols:light-mode'
+}
+const COLOR_MODE_ICON_COLOR = {
+    'dark': "hsl(var(--accent-base-hsl-triplet))",
+    'light': "hsl(var(--black-base-hsl-triplet), 0.3)",
+}
 
 </script>
 
@@ -55,8 +78,12 @@ function show_all_data() {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    background-color: #ffffff15;
     color: hsl(var(--accent-base-hsl-triplet));
+    border: 0.2em solid hsl(var(--black-base-hsl-triplet), 0.3);
+}
+.dark-mode .container {
+    background-color: #ffffff15;
+    border: none;
 }
 
 .part {
@@ -68,9 +95,12 @@ function show_all_data() {
 
 .separator {
     margin-bottom: 1em;
-    height: 1px;
-    background-color: hsl(var(--accent-base-hsl-triplet), 0.3);
+    height: 0.2em;
     width: 100%;
+    background-color: hsl(var(--black-base-hsl-triplet), 0.3);
+}
+.dark-mode .separator {
+    background-color: hsl(var(--accent-base-hsl-triplet), 0.3);
 }
 
 ul {
@@ -87,7 +117,7 @@ ul {
     gap: 0.5em;
 }
 
-.btn-with-text:hover .number, .icon-btn {
+.dark-mode .btn-with-text:hover .number, .dark-mode .icon-btn {
     filter: drop-shadow(0em 0em 0.5em);
 }
 
@@ -107,10 +137,14 @@ ul {
 
 .number {
     font-weight: 700;
-    font-size: 1.5em;
+    font-size: 2em;
     cursor: pointer;
-    opacity: 20%;
+    opacity: 75%;
     transition: all 0.3s ease;
+    color: hsl(var(--black-base-hsl-triplet), 0.3);
+}
+.dark-mode .number {
+    color: hsl(var(--accent-base-hsl-triplet));
 }
 
 .number:hover {

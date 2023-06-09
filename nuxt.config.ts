@@ -2,9 +2,10 @@
 export default defineNuxtConfig({
     devtools: { enabled: true },
     modules: [
-      '@pinia/nuxt',
-      '@nuxtjs/supabase',
-      'nuxt-icon',
+        '@pinia/nuxt', 
+        'nuxt-icon', 
+        '@nuxtjs/color-mode',
+        '@nuxtjs/supabase',
     ],
     css: [
        '@/assets/css/main.css'

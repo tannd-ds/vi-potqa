@@ -9,7 +9,7 @@
                     class="icon-btn"
                     @click="general_store.overlay.is_show=false"
                 >
-                    <Icon name="fa6-solid:xmark" color="white" size="1.5em"/>
+                    <Icon name="material-symbols:close-rounded" :color="COLOR_MODE_ICON_COLOR[$colorMode.value]" size="1.5em"/>
                 </button>
                 <slot>
                     <div v-if="general_store.overlay.type == 'edit'"> 
@@ -38,6 +38,10 @@ const props = defineProps({
     show: Boolean,
 })
 
+const COLOR_MODE_ICON_COLOR = {
+    'dark': "hsl(var(--white-base-hsl-triplet))",
+    'light': "hsl(var(--black-base-hsl-triplet), 0.3)",
+}
 
 </script>
 
@@ -61,10 +65,10 @@ const props = defineProps({
     height: 100vh;
     width: 100vw;
     position: absolute;
-    background-color: hsla(0, 0%, 0%, 0.5   );
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: hsla(0, 0%, 0%, 0.5);
 }
 
 .glass-bg {
@@ -75,6 +79,9 @@ const props = defineProps({
     display: flex;
     flex-direction: column;
     gap: 1em;
+    background-color: hsl(var(--white-base-hsl-triplet));
+}
+.dark-mode .glass-bg {
     background-color: hsl(var(--black-base-hsl-triplet));
 }
 

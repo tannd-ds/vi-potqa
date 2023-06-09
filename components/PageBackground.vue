@@ -13,9 +13,12 @@
 <style scoped>
 .bg {
   width: 100%;
-  background-color: hsl(var(--black-base-hsl-triplet));
   position: absolute;
+  background-color: hsl(var(--white-base-hsl-triplet));
   z-index: -2;
+}
+.dark-mode .bg {
+  background-color: hsl(var(--black-base-hsl-triplet));
 }
 .bg-gradient {
   position: absolute;
