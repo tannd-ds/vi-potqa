@@ -1,14 +1,12 @@
 <template>
-  <div>
+  <div class="container">
     <InputWithLabel
       :type="`input`"
       :id="`edit-context-name`"
       :label_name="`Name`"
       :placeholder="`Input Question`"
       v-model="current_input.edit_context['name']"
-    >
-        Hello
-    </InputWithLabel>
+    />
     <InputWithLabel 
       :type="`textarea`"
       :id="`edit-context-content`"
@@ -26,3 +24,13 @@ import { useAnnotationInputStore } from '~/stores/annotationInput'
 const current_input = useAnnotationInputStore()
 
 </script>
+
+<style scoped>
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+</style>

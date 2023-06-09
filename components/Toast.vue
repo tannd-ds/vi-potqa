@@ -48,7 +48,7 @@ const progress_color = {
 const toast_icon_src = ref({
   'error': "material-symbols:error-outline-rounded",
   'success': "material-symbols:check-circle-outline-rounded",
-  'warning': "heroicons:exclaimation-triangle",
+  'warning': "material-symbols:warning-outline-rounded",
 })
 
 </script>
