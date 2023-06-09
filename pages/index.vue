@@ -58,11 +58,10 @@
   
   const router = useRouter()
   const user = useSupabaseUser()
-  const client = useSupabaseClient()
-  watchEffect(() => {
-    if (!user.value) {
-      router.push('/login')
-    }
-  })
+  // watchEffect(() => {
+  //   if (!user.value) {
+  //     router.push('/login')
+  //   }
+  // })
 
 </script>
