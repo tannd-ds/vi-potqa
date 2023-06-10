@@ -9,6 +9,13 @@
                     </div>
                 </div>
                 <div class="btn-with-text">
+                    <div class="text">Load Data from JSON file</div>
+                    <input hidden id="upload-confirmed" type="file" @change="current_input.uploadFile" accept="application/json">
+                    <label class="icon-btn" for="upload-confirmed">
+                            <Icon name="material-symbols:upload" :color="COLOR_MODE_ICON_COLOR[$colorMode.value]" size="100%"/>
+                    </label>
+                </div>
+                <div class="btn-with-text">
                     <div class="text">Download Data</div>
                     <button class="icon-btn" @click="current_input.download_confirmed">
                         <Icon name="material-symbols:download-rounded" size="100%" :color="COLOR_MODE_ICON_COLOR[$colorMode.value]"/>
@@ -137,7 +144,7 @@ ul {
 
 .number {
     font-weight: 700;
-    font-size: 2em;
+    font-size: 1.8em;
     cursor: pointer;
     opacity: 75%;
     transition: all 0.3s ease;
