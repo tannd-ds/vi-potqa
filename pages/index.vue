@@ -63,5 +63,8 @@
   //     router.push('/login')
   //   }
   // })
+  definePageMeta({
+    colorMode: 'dark',
+  })
 
 </script>

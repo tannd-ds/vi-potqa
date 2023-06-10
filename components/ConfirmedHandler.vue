@@ -24,7 +24,7 @@
             </div>
             <div class="part">
                 <div class="separator"></div>
-                <div class="btn-with-text">
+                <!-- <div class="btn-with-text">
 
                     <div class="text">
                         Change Theme
@@ -38,7 +38,7 @@
                         }">
                         <Icon :name="COLOR_MODE_ICON[$colorMode.value]" size="100%" :color="COLOR_MODE_ICON_COLOR[$colorMode.value]"/>
                     </button>
-                </div>
+                </div> -->
                 <div class="btn-with-text">
                     <div class="text">Sign Out</div>
                     <button class="icon-btn" @click="client.auth.signOut()">
