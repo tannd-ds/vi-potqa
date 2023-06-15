@@ -7,6 +7,9 @@ export default defineNuxtConfig({
         '@nuxtjs/color-mode',
         '@nuxtjs/supabase',
     ],
+    app: {
+        pageTransition: {name: 'page', mode: 'out-in'}
+    },
     css: [
        '@/assets/css/main.css'
     ],

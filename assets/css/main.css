@@ -1,8 +1,8 @@
 :root {
-  --accent-base-hsl-triplet: 168, 100%, 50%;
+  --accent-base-hsl-triplet: 160, 100%, 50%;
   --accent-reverse-hsl-triplet: 340, 84%, 50%;
   --white-base-hsl-triplet: 223, 100%, 97%;
-  --black-base-hsl-triplet: 240, 85%, 5%;
+  --black-base-hsl-triplet: 0, 7%, 16%;
 
   --base-border-radius: 0.25em;
   overflow: hidden;
