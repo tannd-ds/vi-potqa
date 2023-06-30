@@ -167,6 +167,25 @@ export const useAnnotationInputStore = defineStore('annotation_input', {
             if (confirm("Do you want to remove this?"))
                 this.confirmed_data.splice(index, 1)
         },
+        uploadFile(event) {
+            const uploaded_file = event.target.files[0]
+            const reader = new FileReader(); 
+            reader.onload = (event) => {
+                const DATA_LEN_BEFORE_UPLOAD = this.confirmed_data.length
+                const contents = event.target.result; // Get the file contents
+                const jsonData = JSON.parse(contents); // Parse the JSON data
+                
+                for (let i = 0; i < jsonData.length; i++)
+                    this.confirmed_data.push(jsonData[i])
+
+                if (this.confirmed_data.length > DATA_LEN_BEFORE_UPLOAD)
+                    useGeneralStore().show_toast("success", "Success", "Insert Data Sucessfully")
+                else 
+                    useGeneralStore().show_toast("warning", "Error", "Failed to Upload file")
+            }
+            reader.readAsText(uploaded_file)
+            event.target.value = '' // Reset the file list
+        },
         download_confirmed() {
             if (this.confirmed_data.length == 0) {
                 useGeneralStore().show_toast("warning", "Nothing here", "There is no confirmed data to be downloaded")

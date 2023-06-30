@@ -53,6 +53,18 @@
 </template>
 
 <script setup>
-  import { useAnnotationInputStore } from '../stores/annotationInput';
+  import { useAnnotationInputStore } from '../stores/annotationInput'
   const current_input = useAnnotationInputStore()
+  
+  const router = useRouter()
+  const user = useSupabaseUser()
+  // watchEffect(() => {
+  //   if (!user.value) {
+  //     router.push('/login')
+  //   }
+  // })
+  definePageMeta({
+    colorMode: 'dark',
+  })
+
 </script>

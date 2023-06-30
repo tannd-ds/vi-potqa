@@ -1,8 +1,8 @@
 :root {
-  --accent-base-hsl-triplet: 168, 100%, 50%;
+  --accent-base-hsl-triplet: 160, 100%, 50%;
   --accent-reverse-hsl-triplet: 340, 84%, 50%;
   --white-base-hsl-triplet: 223, 100%, 97%;
-  --black-base-hsl-triplet: 240, 85%, 5%;
+  --black-base-hsl-triplet: 0, 7%, 16%;
 
   --base-border-radius: 0.25em;
   overflow: hidden;
@@ -32,6 +32,8 @@
   flex-direction: column;
   gap: min(1em, 15px);
   justify-content: space-between;
+}
+.dark-mode .panel {
   color: hsl(var(--white-base-hsl-triplet));
 }
 
@@ -49,8 +51,11 @@
   font-size: max(2vw, 3vh);
   font-weight: 300;
   letter-spacing: 1em;
-  color: white;
   animation: fade-in-up 1s;
+}
+
+.dark-mode .web-title-container .app-name {
+  color: hsl(var(--white-base-hsl-triplet));
 }
 
 .scrollable {
@@ -66,11 +71,16 @@
 
 .glass-bg {
   padding: 1.5em 1em;
-  background-color: rgba(255, 255, 255, 0.1);
-  border: transparent;
   border-radius: var(--base-border-radius);
-  color: hsl(var(--white-base-hsl-triplet));
   line-height: 1.5em;
+  background-color: hsl(var(--white-base-hsl-triplet), 0.1);
+}
+.dark-mode .glass-bg {
+  color: hsl(var(--white-base-hsl-triplet));
+  border: transparent;
+}
+.light-mode .glass-bg {
+  border: hsl(var(--black-base-hsl-triplet), 0.5) solid;
 }
 
 .icon-btn {
@@ -78,7 +88,7 @@
   border: none;
   background-color: transparent;
   align-items: center;
-  opacity: 20%;
+  opacity: 75%;
   transition: all 0.3s ease;
   cursor: pointer;
 }
@@ -96,10 +106,13 @@
   background-color: hsl(var(--accent-base-hsl-triplet));
   border-radius: var(--base-border-radius);
   color: hsl(var(--black-base-hsl-triplet));
-  border: transparent;
+  /* border: transparent; */
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 700;
+}
+.light-mode .btn {
+  border: hsl(var(--black-base-hsl-triplet), 0.5) solid;
 }
 .btn:active {
   background-color: hsl(168, 60%, 50%);
@@ -114,19 +127,26 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: hsl(var(--black-base-hsl-triplet, 0.1));
+  background: hsl(var(--black-base-hsl-triplet), 0.1);
   border-radius: 5em;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--white-base-hsl-triplet), 0.5);
+  background: hsl(var(--white-base-hsl-triplet), 0.1);
   border-radius: 5em;
+}
+.light-mode ::-webkit-scrollbar-thumb {
+  background: hsl(var(--black-base-hsl-triplet), 0.3);
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: hsl(var(--black-base-hsl-triplet), 0.5);
+}
+.dark-mode ::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--white-base-hsl-triplet), 0.2);
+
 }
 
 @keyframes fade-in-up {

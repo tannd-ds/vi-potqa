@@ -1,8 +1,5 @@
 <template>
   <div class="bg">
-    <!-- <img class="bg-gradient grad-1" src="../assets/images/Ellipse green-blue.png" /> -->
-    <!-- <img class="bg-gradient grad-2" src="../assets/images/Ellipse pink.png" /> -->
-
     <slot></slot>
   </div>
 </template>
@@ -13,9 +10,12 @@
 <style scoped>
 .bg {
   width: 100%;
-  background-color: hsl(var(--black-base-hsl-triplet));
   position: absolute;
+  background-color: hsl(var(--white-base-hsl-triplet));
   z-index: -2;
+}
+.dark-mode .bg {
+  background-color: hsl(var(--black-base-hsl-triplet));
 }
 .bg-gradient {
   position: absolute;
